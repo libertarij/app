@@ -1,158 +1,201 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
 <body>
-<table>
-    <tr>
-        <th>BANK</th>
-        <th>USD/BYN</th>
-        <th>EUR/BYN</th>
-        <th>BYN/PLN</th>
-        <th>UPDATE</th>
-        <th>ON DATE</th>
-    </tr>
-    <tr>
-        <th>BSB</th>
-        <th><p id="print-BSB-USD"></p></th>
-        <th><p id="print-BSB-EUR"></p></th>
-        <th><p id="print-BSB-PLN"></p></th>
-        <th><button onclick="requestPostBSB()">update</button></th>
-        <th><p id="print-BSB-TS"></p></th>
-    </tr>
-</table>
+    <table class="table table-bordered table-secondary">
+        <thead class="bg-primary">
+            <tr>
+                <th scope="col">BANK</th>
+                <th scope="col">USD/BYN</th>
+                <th scope="col">EUR/BYN</th>
+                <th scope="col">BYN/PLN</th>
+                <th scope="col">UPDATE</th>
+                <th scope="col">ON DATE</th>
+            </tr>
+        </thead>
+        <tbody class="table-light">
+            <tr>
+                <th scope="row">BSB</th>
+                <td>
+                    <p id="print-BSB-USD"></p>
+                </td>
+                <td>
+                    <p id="print-BSB-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-BSB-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostBSB()">update</button></td>
+                <td>
+                    <p id="print-BSB-TS"></p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">BNB</th>
+                <td>
+                    <p id="print-BNB-USD"></p>
+                </td>
+                <td>
+                    <p id="print-BNB-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-BNB-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostBNB()">update</button></td>
+                <td>
+                    <p id="print-BNB-TS"></p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Alfa</th>
+                <td>
+                    <p id="print-Alfa-USD"></p>
+                </td>
+                <td>
+                    <p id="print-Alfa-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-Alfa-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostAlfa()">update</button></td>
+                <td>
+                    <p id="print-Alfa-TS"></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<div><p id="printBNB"></p> <button onclick="requestPostBNB()">update</button></div>
-<div><p id="printAlfa"></p> <button onclick="requestPostAlfa()">update</button></div>
+    <script>
+        function requestPostBSB() {
+            let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
+            console.log('URL for POST:', urlBsb);
+            let nowDate = Date.parse(new Date());
 
-<script>
-function requestPostBSB () {
-    let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
-    console.log('URL for POST:', urlBsb);
-    let nowDate = Date.parse(new Date());
+            fetch(urlBsb, {
+                body: JSON.stringify({
+                    'period': nowDate,
+                    'type': 'CARD'
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                },
+                method: 'POST',
+                redirect: 'follow'
+            })
+                .then(response => {
+                    response.json()
+                        .then(res => {
+                            let rates = res['rates'];
 
-    fetch(urlBsb,{
-            body: JSON.stringify({
-                'period': nowDate,
-                'type': 'CARD'
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-            },
-            method: 'POST',
-            redirect: 'follow'
-        })
-        .then(response => {
-                response.json() 
-                .then(res => {
-                    console.log(res.rates)
+                            let rateUSD = rates[0].sellAmount.toFixed(4);
+                            let rateEUR = rates[1].sellAmount.toFixed(4);
+                            let ratePLN = (1 / rates[6].sellAmount).toFixed(4);
 
-                    let rates = res['rates'];
-
-                    let rateUSD = rates[0].sellAmount.toFixed(4);
-                    let rateEUR = rates[1].sellAmount.toFixed(4);
-                    let ratePLN = (1 / rates[6].sellAmount).toFixed(4);
-
-                    document.getElementById("print-BSB-USD").innerText = rateUSD;
-                    document.getElementById("print-BSB-EUR").innerText = rateEUR;
-                    document.getElementById("print-BSB-PLN").innerText = ratePLN;
-                    document.getElementById("print-BSB-TS").innerText = new Date().toLocaleString();
+                            document.getElementById("print-BSB-USD").innerText = rateUSD;
+                            document.getElementById("print-BSB-EUR").innerText = rateEUR;
+                            document.getElementById("print-BSB-PLN").innerText = ratePLN;
+                            document.getElementById("print-BSB-TS").innerText = new Date().toLocaleString();
+                        })
+                        ;
                 })
-            ;
-        })
-        .catch(error => {
-        console.error(error);
-        });
-}
+                .catch(error => {
+                    console.error(error);
+                });
+        }
 
-function requestPostBNB () {
-    var urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
-    console.log('URL for POST:', urlBNB);
+        function requestPostBNB() {
+            let urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
+            console.log('URL for POST:', urlBNB);
 
-    let printBNB = document.getElementById("printBNB");
+            let printBNB = document.getElementById("printBNB");
 
-    fetch(urlBNB, {   
-            headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-            }
-        })
-        .then(response => {
-            //console.log(response);
-            response.text()
-            .then(res => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(res, "text/html");
-                console.log(doc);
-
-                let rates = JSON.parse(doc.querySelector('input.jsConfig').value);
-
-                let rateUSD = rates['USD']['BYN']['SALE'];
-                let rateEUR = rates['EUR']['BYN']['SALE'];
-                let ratePLN = rates['PLN']['BYN']['SALE'];
-
-                let rateText = "BNB: " + rateUSD + " USD"  +
-                    " | " + rateEUR + " EUR" +
-                    " | " + ratePLN + " PLN";
-                printBNB.innerText = rateText;
+            fetch(urlBNB, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+                }
             })
-        })
-        .catch(error => {
-        console.error(error);
-        });
-}
+                .then(response => {
+                    response.text()
+                        .then(res => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(res, "text/html");
+                            let rates = JSON.parse(doc.querySelector('input.jsConfig').value);
 
-function requestPostAlfa (urlAlfa)
-{
-    const myArticle = document.querySelector("article");
-    console.log('URL for POST:', urlAlfa);
-    
-    fetch(urlAlfa, {   
-            cors: 'no-cors',
-            headers:  {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-            } 
-        })
-        .then(response => {
-            //console.log(response);
-            response.text()
-            .then(res => {
-                //console.log("Alfa: ", res);
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(res, "text/html");
-                //console.log("Alfa: ", doc);
-                //const obj = JSON.parse(doc.querySelectorAll("div"));
-                const obj = doc.querySelectorAll("div");
-                console.log(obj);
-                // const obj = JSON.parse(doc.querySelectorAll("input")[4].value);
+                            let rateUSD = rates['USD']['BYN']['SALE'].toFixed(4);
+                            let rateEUR = rates['EUR']['BYN']['SALE'].toFixed(4);
+                            let ratePLN = (1 / rates['PLN']['BYN']['SALE']).toFixed(4);
 
-                // var bnbElement = document.createElement("bnb");
-                // bnbElement.textContent = (
-                //     "BNB: " + obj.USD.BYN.SALE + " USD"  + 
-                //     " | " + obj.EUR.BYN.SALE + " EUR" + 
-                //     " | " + obj.PLN.BYN.SALE + " PLN");
-                // printBNB.appendChild(bnbElement)
+                            document.getElementById("print-BNB-USD").innerText = rateUSD;
+                            document.getElementById("print-BNB-EUR").innerText = rateEUR;
+                            document.getElementById("print-BNB-PLN").innerText = ratePLN;
+                            document.getElementById("print-BNB-TS").innerText = new Date().toLocaleString();
+                        })
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        function requestPostAlfa() {
+            let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
+            console.log('URL for POST:', urlAlfa);
+
+            fetch(urlAlfa, {
+                cors: 'no-cors',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+                }
             })
-        })
-        .catch(error => {
-        console.error(error);
-        });
-    
-}
+                .then(response => {
+                    response.text()
+                        .then(res => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(res, "text/html");
+                            let obj = doc.querySelector('div.section-content div[data-component]');
+                            let rates = JSON.parse(obj.getAttribute('data-initial'));
 
-function getExchangeRates(){
-    // var urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
-    requestPostBSB();
-    requestPostBNB();
-    //requestPostAlfa(urlAlfa);
-}
+                            let rateUSD = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['0']['sell']['value']).toFixed(4);
+                            let rateEUR = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['1']['sell']['value']).toFixed(4);
 
-window.onload = (event) => {
-    console.log('onload')
-    getExchangeRates();
-};
-</script>
+                            document.getElementById("print-Alfa-USD").innerText = rateUSD;
+                            document.getElementById("print-Alfa-EUR").innerText = rateEUR;
+                            document.getElementById("print-Alfa-TS").innerText = new Date().toLocaleString();
+                        })
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        function getExchangeRates() {
+            requestPostBSB();
+            requestPostBNB();
+            requestPostAlfa();
+        }
+
+        window.onload = (event) => {
+            console.log('onload')
+            getExchangeRates();
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
