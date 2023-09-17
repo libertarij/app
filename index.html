@@ -4,23 +4,33 @@
     <meta charset="utf-8" />
 </head>
 <body>
-<form name="search">
-    <input type="text" name="key" placeholder="Введите ключ"></input>
-    <input type="button" name="print" value="Get rates" />
+<table>
+    <tr>
+        <th>USD/BYN</th>
+        <th>EUR/BYN</th>
+        <th>BYN/PLN</th>
+        <th>UPDATE</th>
+        <th>ON DATE</th>
+    </tr>
+    <tr>
+        <th><p id="print-BSB-USD"></p></th>
+        <th><p id="print-BSB-EUR"></p></th>
+        <th><p id="print-BSB-PLN"></p></th>
+        <th><button onclick="requestPostBSB()">update</button></th>
+        <th><p id="print-BSB-TS"></p></th>
+    </tr>
+</table>
 
-</form>
-<div id="printBSB"></div>   
-<div id="printBNB"></div>
-<div id="printAlfa"></div>
+<div><p id="printBNB"></p> <button onclick="requestPostBNB()">update</button></div>
+<div><p id="printAlfa"></p> <button onclick="requestPostAlfa()">update</button></div>
+
 <script>
+function requestPostBSB () {
+    let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
+    console.log('URL for POST:', urlBsb);
+    let nowDate = Date.parse(new Date());
 
-var printBSB = document.getElementById("printBSB");
-var nowDate = Date.parse(new Date());
-//console.log("Curent date:",nowDate);
-
-function requestPostBSB (urlBSB) {
-    console.log('URL for POST:', urlBSB);
-    fetch(urlBSB,{
+    fetch(urlBsb,{
             body: JSON.stringify({
                 'period': nowDate,
                 'type': 'CARD'
@@ -37,15 +47,17 @@ function requestPostBSB (urlBSB) {
                 response.json() 
                 .then(res => {
                     console.log(res.rates)
-                    var bsbElement = document.createElement("bsb");
-                    bsbElement.textContent = ("BSB: " +
-                    res.rates[0].sellAmount + " " +
-                    res.rates[0].buyCurrencyName + " | " +
-                    res.rates[1].sellAmount + " " +
-                    res.rates[1].buyCurrencyName + " | " +
-                    res.rates[6].sellAmount + " " +
-                    res.rates[6].buyCurrencyName);
-                    printBSB.appendChild(bsbElement)
+
+                    let rates = res['rates'];
+
+                    let rateUSD = rates[0].sellAmount.toFixed(4);
+                    let rateEUR = rates[1].sellAmount.toFixed(4);
+                    let ratePLN = (1 / rates[6].sellAmount).toFixed(4);
+
+                    document.getElementById("print-BSB-USD").innerText = rateUSD;
+                    document.getElementById("print-BSB-EUR").innerText = rateEUR;
+                    document.getElementById("print-BSB-PLN").innerText = ratePLN;
+                    document.getElementById("print-BSB-TS").innerText = new Date().toLocaleString();
                 })
             ;
         })
@@ -54,10 +66,12 @@ function requestPostBSB (urlBSB) {
         });
 }
 
-function requestPostBNB (urlBNB)
-{
-    const myArticle = document.querySelector("article");
+function requestPostBNB () {
+    var urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
     console.log('URL for POST:', urlBNB);
+
+    let printBNB = document.getElementById("printBNB");
+
     fetch(urlBNB, {   
             headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
@@ -69,24 +83,18 @@ function requestPostBNB (urlBNB)
             .then(res => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(res, "text/html");
+                console.log(doc);
 
-                //const obj = JSON.parse(doc.querySelectorAll("input").find('form-group currency-field').value);
+                let rates = JSON.parse(doc.querySelector('input.jsConfig').value);
 
-                const html = doc.querySelectorAll("input");
-                console.log(html);
+                let rateUSD = rates['USD']['BYN']['SALE'];
+                let rateEUR = rates['EUR']['BYN']['SALE'];
+                let ratePLN = rates['PLN']['BYN']['SALE'];
 
-                //const jsdata = JSON.parse(html);
-                //console.log(jsdata);
-                //
-
-                //const obj = JSON.parse(doc.querySelectorAll("input")[4].value);
-
-                var bnbElement = document.createElement("bnb");
-                bnbElement.textContent = (
-                    "BNB: " + obj.USD.BYN.SALE + " USD"  + 
-                    " | " + obj.EUR.BYN.SALE + " EUR" + 
-                    " | " + obj.PLN.BYN.SALE + " PLN");
-                printBNB.appendChild(bnbElement)
+                let rateText = "BNB: " + rateUSD + " USD"  +
+                    " | " + rateEUR + " EUR" +
+                    " | " + ratePLN + " PLN";
+                printBNB.innerText = rateText;
             })
         })
         .catch(error => {
@@ -132,17 +140,17 @@ function requestPostAlfa (urlAlfa)
     
 }
 
-function getExchangeRates(e){
-    var urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
-    var urlBnb = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
-    var urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
-    //requestPostBSB(urlBsb);   
-    requestPostBNB(urlBnb);
+function getExchangeRates(){
+    // var urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
+    requestPostBSB();
+    requestPostBNB();
     //requestPostAlfa(urlAlfa);
 }
 
-var launchPost = document.search.print;
-launchPost.addEventListener("click", getExchangeRates);
+window.onload = (event) => {
+    console.log('onload')
+    getExchangeRates();
+};
 </script>
 </body>
 </html>
