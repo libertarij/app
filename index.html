@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+    <input type="text" name="key" placeholder="Введите ключ"></input>
+    <input type="button" name="print" value="Get rates" />
+
+</form>
+<div id="printBSB"></div>   
+<div id="printBNB"></div>
+<div id="printAlfa"></div>
+<script>
+
+var printBSB = document.getElementById("printBSB");
+var nowDate = Date.parse(new Date());
+//console.log("Curent date:",nowDate);
+
+function requestPostBSB (urlBSB) {
+    console.log('URL for POST:', urlBSB);
+    fetch(urlBSB,{
+            body: JSON.stringify({
+                'period': nowDate,
+                'type': 'CARD'
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+            },
+            method: 'POST',
+            redirect: 'follow'
+        })
+        .then(response => {
+                response.json() 
+                .then(res => {
+                    console.log(res.rates)
+                    var bsbElement = document.createElement("bsb");
+                    bsbElement.textContent = ("BSB: " +
+                    res.rates[0].sellAmount + " " +
+                    res.rates[0].buyCurrencyName + " | " +
+                    res.rates[1].sellAmount + " " +
+                    res.rates[1].buyCurrencyName + " | " +
+                    res.rates[6].sellAmount + " " +
+                    res.rates[6].buyCurrencyName);
+                    printBSB.appendChild(bsbElement)
+                })
+            ;
+        })
+        .catch(error => {
+        console.error(error);
+        });
+}
+
+function requestPostBNB (urlBNB)
+{
+    const myArticle = document.querySelector("article");
+    console.log('URL for POST:', urlBNB);
+    fetch(urlBNB, {   
+            headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+            }
+        })
+        .then(response => {
+            //console.log(response);
+            response.text()
+            .then(res => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(res, "text/html");
+
+                //const obj = JSON.parse(doc.querySelectorAll("input").find('form-group currency-field').value);
+
+                const html = doc.querySelectorAll("input");
+                console.log(html);
+
+                //const jsdata = JSON.parse(html);
+                //console.log(jsdata);
+                //
+
+                //const obj = JSON.parse(doc.querySelectorAll("input")[4].value);
+
+                var bnbElement = document.createElement("bnb");
+                bnbElement.textContent = (
+                    "BNB: " + obj.USD.BYN.SALE + " USD"  + 
+                    " | " + obj.EUR.BYN.SALE + " EUR" + 
+                    " | " + obj.PLN.BYN.SALE + " PLN");
+                printBNB.appendChild(bnbElement)
+            })
+        })
+        .catch(error => {
+        console.error(error);
+        });
+}
+
+function requestPostAlfa (urlAlfa)
+{
+    const myArticle = document.querySelector("article");
+    console.log('URL for POST:', urlAlfa);
+    
+    fetch(urlAlfa, {   
+            cors: 'no-cors',
+            headers:  {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+            } 
+        })
+        .then(response => {
+            //console.log(response);
+            response.text()
+            .then(res => {
+                //console.log("Alfa: ", res);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(res, "text/html");
+                //console.log("Alfa: ", doc);
+                //const obj = JSON.parse(doc.querySelectorAll("div"));
+                const obj = doc.querySelectorAll("div");
+                console.log(obj);
+                // const obj = JSON.parse(doc.querySelectorAll("input")[4].value);
+
+                // var bnbElement = document.createElement("bnb");
+                // bnbElement.textContent = (
+                //     "BNB: " + obj.USD.BYN.SALE + " USD"  + 
+                //     " | " + obj.EUR.BYN.SALE + " EUR" + 
+                //     " | " + obj.PLN.BYN.SALE + " PLN");
+                // printBNB.appendChild(bnbElement)
+            })
+        })
+        .catch(error => {
+        console.error(error);
+        });
+    
+}
+
+function getExchangeRates(e){
+    var urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
+    var urlBnb = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
+    var urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
+    //requestPostBSB(urlBsb);   
+    requestPostBNB(urlBnb);
+    //requestPostAlfa(urlAlfa);
+}
+
+var launchPost = document.search.print;
+launchPost.addEventListener("click", getExchangeRates);
+</script>
+</body>
+</html>
