@@ -279,7 +279,7 @@
 
                             let rateUSD = (jsUSD[1][jsUSD['1']['length']-1]).toFixed(4);
                             let rateEUR = (jsEUR[1][jsEUR['1']['length']-1]).toFixed(4);
-                            let ratePLN = (1/jsPLN[1][jsPLN['1']['length']-1]).toFixed(4);
+                            let ratePLN = (10/jsPLN[1][jsPLN['1']['length']-1]).toFixed(4);
 
                              document.getElementById("print-BGPB-USD").innerText = rateUSD;
                              document.getElementById("print-BGPB-EUR").innerText = rateEUR;
@@ -292,7 +292,6 @@
                     console.error(error);
                 });
         }
-
 
         function getExchangeRates() {
             requestPostBSB();
