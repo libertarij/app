@@ -100,6 +100,38 @@
                     <p id="print-BGPB-TS"></p>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">MTB</th>
+                <td>
+                    <p id="print-MTB-USD"></p>
+                </td>
+                <td>
+                    <p id="print-MTB-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-MTB-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostMTB()">update</button></td>
+                <td>
+                    <p id="print-MTB-TS"></p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">PayOkay</th>
+                <td>
+                    <p id="print-PayOkay-USD"></p>
+                </td>
+                <td>
+                    <p id="print-PayOkay-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-PayOkay-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostPayOkay()">update</button></td>
+                <td>
+                    <p id="print-PayOkay-TS"></p>
+                </td>
+            </tr>
         </tbody>
     </table>
 
@@ -293,12 +325,101 @@
                 });
         }
 
+        function requestPostMTB() {
+            let urlMTB = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
+            console.log('URL for POST:', urlMTB);
+            let nowDate = Date.parse(new Date());
+
+            fetch(urlMTB, {
+                cors: 'no-cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                },
+                method: 'GET',
+            })
+                .then(response => {
+                    response.text()
+                        .then(res => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(res, "application/xml");
+                                        
+                            let rateUSD;
+                            let rateEUR;
+                            
+                            let currencies = doc.querySelectorAll('cards currency');
+
+                            currencies.forEach(currency => {
+                            if (currency.querySelector('code').textContent==="USD" && currency.querySelector('codeTo').textContent==="BYN") {
+                                rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
+                            if (currency.querySelector('code').textContent==="EUR" && currency.querySelector('codeTo').textContent==="BYN") {
+                                rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
+                            });
+
+                            document.getElementById("print-MTB-USD").innerText = rateUSD;
+                            document.getElementById("print-MTB-EUR").innerText = rateEUR;
+                            document.getElementById("print-MTB-TS").innerText = new Date().toLocaleString();
+                        })
+                        ;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        function requestPostPayOkay() {
+            let urlPayOkay = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
+            console.log('URL for POST:', urlPayOkay);
+            let nowDate = Date.parse(new Date());
+
+            fetch(urlPayOkay, {
+                cors: 'no-cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                },
+                method: 'GET',
+            })
+                .then(response => {
+                    response.text()
+                        .then(res => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(res, "application/xml");
+                                        
+                            let rateUSD;
+                            let rateEUR;
+                            
+                            let currencies = doc.querySelectorAll('payokay currency');
+
+                            currencies.forEach(currency => {
+                            if (currency.querySelector('code').textContent==="USD" && currency.querySelector('codeTo').textContent==="BYN") {
+                                rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
+                            if (currency.querySelector('code').textContent==="EUR" && currency.querySelector('codeTo').textContent==="BYN") {
+                                rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
+                            });
+
+                            document.getElementById("print-PayOkay-USD").innerText = rateUSD;
+                            document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
+                            document.getElementById("print-PayOkay-TS").innerText = new Date().toLocaleString();
+                        })
+                        ;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+      
+        
         function getExchangeRates() {
             requestPostBSB();
             requestPostBNB();
             //requestPostAlfa();
             requestPostParitet();
             requestPostBGPB();
+            requestPostMTB();
+            requestPostPayOkay();
         }
 
         window.onload = (event) => {
