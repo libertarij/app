@@ -68,6 +68,22 @@
                     <p id="print-Alfa-TS"></p>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">Paritet</th>
+                <td>
+                    <p id="print-Paritet-USD"></p>
+                </td>
+                <td>
+                    <p id="print-Paritet-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-Paritet-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostParitet()">update</button></td>
+                <td>
+                    <p id="print-Paritet-TS"></p>
+                </td>
+            </tr>
         </tbody>
     </table>
 
@@ -175,10 +191,53 @@
                 });
         }
 
+        function requestPostParitet() {
+            let urlParitet = 'https://corsproxy.io/?https://www.paritetbank.by/private/rates/';
+            console.log('URL for POST:', urlParitet);
+            let nowDate = Date.parse(new Date());
+
+            fetch(urlParitet, {
+                cors: 'no-cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                },
+                method: 'GET',
+            })
+                .then(response => {
+                    //console.log(response);
+                    response.text()
+                        .then(res => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(res, "text/html");
+                            let conversion  = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;                            
+
+                            let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}")+1));
+                            let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
+                            let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
+
+                            //let rates = JSON.parse(doc.getAttribute('ajax-block'));
+                            //let rates = obj.getAttribute('ajax-block');
+                            //console.log(obj);
+
+                             document.getElementById("print-Paritet-USD").innerText = rateUSD;
+                             document.getElementById("print-Paritet-EUR").innerText = rateEUR;
+                             document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
+                        })
+                        ;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
         function getExchangeRates() {
-            requestPostBSB();
-            requestPostBNB();
-            requestPostAlfa();
+            //requestPostBSB();
+            //requestPostBNB();
+            //requestPostAlfa();
+            requestPostParitet();
         }
 
         window.onload = (event) => {
