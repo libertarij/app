@@ -84,6 +84,22 @@
                     <p id="print-Paritet-TS"></p>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">BGPB</th>
+                <td>
+                    <p id="print-BGPB-USD"></p>
+                </td>
+                <td>
+                    <p id="print-BGPB-EUR"></p>
+                </td>
+                <td>
+                    <p id="print-BGPB-PLN"></p>
+                </td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="requestPostBGPB()">update</button></td>
+                <td>
+                    <p id="print-BGPB-TS"></p>
+                </td>
+            </tr>
         </tbody>
     </table>
 
@@ -212,18 +228,64 @@
                             const parser = new DOMParser();
                             const doc = parser.parseFromString(res, "text/html");
                             let conversion  = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;                            
+                            console.log(conversion);
 
-                            let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}")+1));
-                            let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
-                            let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
+                            // let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}")+1));
+                            // let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
+                            // let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
 
-                            //let rates = JSON.parse(doc.getAttribute('ajax-block'));
-                            //let rates = obj.getAttribute('ajax-block');
-                            //console.log(obj);
+                            //  document.getElementById("print-Paritet-USD").innerText = rateUSD;
+                            //  document.getElementById("print-Paritet-EUR").innerText = rateEUR;
+                            //  document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
+                        })
+                        ;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
 
-                             document.getElementById("print-Paritet-USD").innerText = rateUSD;
-                             document.getElementById("print-Paritet-EUR").innerText = rateEUR;
-                             document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
+        function requestPostBGPB() {
+            let urlBGPB = 'https://corsproxy.io/?https://belgazprombank.by/about/kursi_valjut/';
+            console.log('URL for POST:', urlBGPB);
+            let nowDate = Date.parse(new Date());
+
+            fetch(urlBGPB, {
+                cors: 'no-cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                },
+                method: 'GET',
+            })
+                .then(response => {
+                    //console.log(response);
+                    response.text()
+                        .then(res => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(res, "text/html");
+
+                            let conversionUSD  = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartUSD")).innerText;
+                            let conversionEUR  = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartEUR")).innerText;
+                            let conversionPLN  = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartPLN")).innerText;
+
+                            let objUSD = conversionUSD.substring(conversionUSD.indexOf("[["), conversionUSD.lastIndexOf("]]")+2);
+                            let objEUR = conversionEUR.substring(conversionEUR.indexOf("[["), conversionEUR.lastIndexOf("]]")+2);
+                            let objPLN = conversionPLN.substring(conversionPLN.indexOf("[["), conversionPLN.lastIndexOf("]]")+2);
+
+                            let jsUSD = JSON.parse(objUSD);
+                            let jsEUR = JSON.parse(objEUR);
+                            let jsPLN = JSON.parse(objPLN);
+
+                            let rateUSD = (jsUSD[1][jsUSD['1']['length']-1]).toFixed(4);
+                            let rateEUR = (jsEUR[1][jsEUR['1']['length']-1]).toFixed(4);
+                            let ratePLN = (1/jsPLN[1][jsPLN['1']['length']-1]).toFixed(4);
+
+                             document.getElementById("print-BGPB-USD").innerText = rateUSD;
+                             document.getElementById("print-BGPB-EUR").innerText = rateEUR;
+                             document.getElementById("print-BGPB-PLN").innerText = ratePLN;
+                             document.getElementById("print-BGPB-TS").innerText = new Date().toLocaleString();
                         })
                         ;
                 })
@@ -238,6 +300,7 @@
             requestPostBNB();
             requestPostAlfa();
             requestPostParitet();
+            requestPostBGPB();
         }
 
         window.onload = (event) => {
