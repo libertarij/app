@@ -227,16 +227,15 @@
                         .then(res => {
                             const parser = new DOMParser();
                             const doc = parser.parseFromString(res, "text/html");
-                            let conversion  = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;                            
-                            console.log(conversion);
+                            let conversion  = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;
 
-                            // let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}")+1));
-                            // let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
-                            // let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
+                            let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}")+1));
+                            let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
+                            let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
 
-                            //  document.getElementById("print-Paritet-USD").innerText = rateUSD;
-                            //  document.getElementById("print-Paritet-EUR").innerText = rateEUR;
-                            //  document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
+                             document.getElementById("print-Paritet-USD").innerText = rateUSD;
+                             document.getElementById("print-Paritet-EUR").innerText = rateEUR;
+                             document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
                         })
                         ;
                 })
