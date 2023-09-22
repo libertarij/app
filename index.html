@@ -3,21 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" -->
-        <!-- integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"> -->
     <style>
         /* Styling the spinner */
-        /* #spinner{
-            display: block;
-        } */
         .spinnerxyz {
         animation: 1s linear 0s normal none infinite running rot;
         -webkit-animation: 1s linear 0s normal none infinite running rot;
-        /* width: 100px; */
         }
         @keyframes spinnerxyz {
         0% {
@@ -625,27 +617,6 @@
             //requestPostMTB();
             requestPostPayOkay();
         }
-
-        var Timer = function(callback, delay) {
-        var timerId, start, remaining = delay;
-
-        this.pause = function() {
-            window.clearTimeout(timerId);
-            timerId = null;
-            remaining -= Date.now() - start;
-        };
-
-        this.resume = function() {
-            if (timerId) {
-                return;
-            }
-
-            start = Date.now();
-            timerId = window.setTimeout(callback, remaining);
-        };
-
-        this.resume();
-        };
 
         window.onload = (event) => {
             console.log('onload');
