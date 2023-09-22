@@ -11,23 +11,24 @@
         animation: 1s linear 0s normal none infinite running rot;
         -webkit-animation: 1s linear 0s normal none infinite running rot;
         }
-        @keyframes spinnerxyz {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-        }
         @-webkit-keyframes rot {
         0% {
             transform: rotate(0deg);
         }
+        25%{
+            transform: rotate(90deg);
+        }
+        50%{
+            transform: rotate(180deg);
+        }
+        75%{
+            transform: rotate(270deg);
+        }
         100% {
             transform: rotate(360deg);
         }
         }
-
+        /* Styling the table*/
         table {
             border-spacing: 0;
             width: 100%;
