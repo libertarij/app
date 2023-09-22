@@ -3,40 +3,31 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" -->
+        <!-- integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"> -->
     <style>
         /* Styling the spinner */
-        #spinnerBSB, #spinnerBNB{
-        display: block;
-        top: 30vh;
-        left: calc(50% - 20px);
-        width: 40px;
-        height: 40px;
+        /* #spinner{
+            display: block;
+        } */
+        .spinnerxyz {
+        animation: 1s linear 0s normal none infinite running rot;
+        -webkit-animation: 1s linear 0s normal none infinite running rot;
+        /* width: 100px; */
         }
-        #spinnerBSB div, #spinnerBNB div, #spinnerAlfa div, #spinnerParitet div, #spinnerBGPB div, #spinnerMTB div, #spinnerPayOkay div {
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        width: 32px;
-        height: 32px;
-        margin: 4px;
-        border: 4px solid rgb(30, 191, 255);
-        border-radius: 50%;
-        animation: spinnerAnimation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: rgb(30, 191, 255) transparent transparent transparent;
+        @keyframes spinnerxyz {
+        0% {
+            transform: rotate(0deg);
         }
-        #spinnerBSB div:nth-child(1), #spinnerBNB div:nth-child(1), #spinnerAlfa div:nth-child(1), #spinnerParitet div:nth-child(1), #spinnerBGPB div:nth-child(1), #spinnerMTB div:nth-child(1), #spinnerPayOkay div:nth-child(1) {
-        animation-delay: -0.45s;
+        100% {
+            transform: rotate(360deg);
         }
-        #spinnerBSB div:nth-child(2), #spinnerBNB div:nth-child(2), #spinnerAlfa div:nth-child(2), #spinnerParitet div:nth-child(2), #spinnerBGPB div:nth-child(2), #spinnerMTB div:nth-child(2), #spinnerPayOkay div:nth-child(2) {
-        animation-delay: -0.3s;
         }
-        #spinnerBSB div:nth-child(3), #spinnerBNB div:nth-child(3), #spinnerAlfa div:nth-child(3), #spinnerParitet div:nth-child(3), #spinnerBGPB div:nth-child(3), #spinnerMTB div:nth-child(3), #spinnerPayOkay div:nth-child(3) {
-        animation-delay: -0.15s;
-        }
-        @keyframes spinnerAnimation {
+        @-webkit-keyframes rot {
         0% {
             transform: rotate(0deg);
         }
@@ -50,16 +41,13 @@
             width: 100%;
             border: 1px solid #ddd;
         }
-        
         th {
             cursor: pointer;
         }
-        
         th, td {
             text-align: left;
             padding: 16px;
         }
-        
         tr:nth-child(even) {
             background-color: #f2f2f2
         }
@@ -91,13 +79,18 @@
                     <p id="print-BSB-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerBSB" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button" id="btBSB" disabled="true" class="btn btn-primary" onclick="requestPostBSB()">update</button></td>
+                   <button id="btnLoadingBSB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdateBSB" class="btn btn-primary" type="button" onclick="requestPostBSB()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 <td>
                     <p id="print-BSB-TS"></p>
                 </td>
@@ -114,13 +107,19 @@
                     <p id="print-BNB-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerBNB" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button"  id="btBNB" disabled="true" class="btn btn-primary" onclick="requestPostBNB()">update</button>
+                    <button id="btnLoadingBNB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <!-- <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdateBNB" class="btn btn-primary" type="button" onclick="requestPostBNB()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 </td>
                 <td>
                     <p id="print-BNB-TS"></p>
@@ -138,13 +137,18 @@
                     <p id="print-Alfa-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerAlfa" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button" id="btAlfa"  disabled="true"  class="btn btn-primary" onclick="requestPostAlfa()">update</button></td>
+                    <button id="btnLoadingAlfa" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdateAlfa" class="btn btn-primary" type="button" onclick="requestPostAlfa()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 <td>
                     <p id="print-Alfa-TS"></p>
                 </td>
@@ -161,13 +165,18 @@
                     <p id="print-Paritet-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerParitet" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button"  id="btParitet"  disabled="true"  class="btn btn-primary" onclick="requestPostParitet()">update</button></td>
+                    <button id="btnLoadingParitet" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdateParitet" class="btn btn-primary" type="button" onclick="requestPostParitet()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 <td>
                     <p id="print-Paritet-TS"></p>
                 </td>
@@ -184,18 +193,23 @@
                     <p id="print-BGPB-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerBGPB" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button"  id="btBGPB"  disabled="true"  class="btn btn-primary" onclick="requestPostBGPB()">update</button></td>
+                    <button id="btnLoadingBGPB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdateBGPB" class="btn btn-primary" type="button" onclick="requestPostBGPB()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 <td>
                     <p id="print-BGPB-TS"></p>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <th><a href="https://www.mtbank.by/courses/cards/">MTB</a></th>
                 <td>
                     <p id="print-MTB-USD"></p>
@@ -207,17 +221,22 @@
                     <p id="print-MTB-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerMTB" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button"  id="btMTB"  disabled="true"  class="btn btn-primary" onclick="requestPostMTB()">update</button></td>
+                    <button id="btnLoadingMTB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdateMTB" class="btn btn-primary" type="button" onclick="requestPostMTB()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 <td>
                     <p id="print-MTB-TS"></p>
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <th><a href="https://www.mtbank.by/courses/cards/">PayOkay</a></th>
                 <td>
@@ -230,13 +249,18 @@
                     <p id="print-PayOkay-PLN"></p>
                 </td>
                 <td>
-                    <div id="spinnerPayOkay" style="display: none;">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>                    
-                    </div>
-                    <button type="button"  id="btPayOkay"  disabled="true"  class="btn btn-primary" onclick="requestPostPayOkay()">update</button></td>
+                    <button id="btnLoadingPayOkay" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
+                        <div class="spinnerxyz">
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                    <button id="btnUdatePayOkay" class="btn btn-primary" type="button" onclick="requestPostPayOkay()">
+                        <div>
+                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                        </div>
+                        <span class="sr-only">Update</span>
+                    </button>
                 <td>
                     <p id="print-PayOkay-TS"></p>
                 </td>
@@ -246,12 +270,11 @@
 
     <script>
         function requestPostBSB() {
-            var button = document.getElementById("btBSB");
-            var spinner = document.querySelector("#spinnerBSB");
+            var btnUpdate = document.getElementById("btnUdateBSB");
+            var btnLoading = document.getElementById("btnLoadingBSB");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block"; 
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block';
   
             let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
             console.log('URL for POST:', urlBsb);
@@ -284,26 +307,23 @@
                 document.getElementById("print-BSB-PLN").innerText = ratePLN;
                 document.getElementById("print-BSB-TS").innerText = new Date().toLocaleString();
 
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
 
         function requestPostBNB() {
-            var button = document.getElementById("btBNB");
-            var spinner = document.querySelector("#spinnerBNB");
+            var btnUpdate = document.getElementById("btnUdateBNB");
+            var btnLoading = document.getElementById("btnLoadingBNB");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block";           
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block';
 
             let urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
             console.log('URL for POST:', urlBNB);
@@ -331,26 +351,23 @@
                     document.getElementById("print-BNB-PLN").innerText = ratePLN;
                     document.getElementById("print-BNB-TS").innerText = new Date().toLocaleString();
                     
-                    button.disabled = false;
-                    button.style.display = 'block';                    
-                    spinner.style.display = 'none';
+                    btnUpdate.style.display = 'block';
+                    btnLoading.style.display = 'none';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
 
         function requestPostAlfa() {
-            var button = document.getElementById("btALfa");
-            var spinner = document.querySelector("#spinnerAlfa");
+            var btnUpdate = document.getElementById("btnUdateAlfa");
+            var btnLoading = document.getElementById("btnLoadingAlfa");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block"; 
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block'; 
 
             let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
             console.log('URL for POST:', urlAlfa);
@@ -376,26 +393,23 @@
                     document.getElementById("print-Alfa-EUR").innerText = rateEUR;
                     document.getElementById("print-Alfa-TS").innerText = new Date().toLocaleString();
                     
-                    button.disabled = false;
-                    button.style.display = 'block';                    
-                    spinner.style.display = 'none';
+                    btnUpdate.style.display = 'block';
+                    btnLoading.style.display = 'none';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
 
         function requestPostParitet() {
-            var button = document.getElementById("btParitet");
-            var spinner = document.querySelector("#spinnerParitet");
+            var btnUpdate = document.getElementById("btnUdateParitet");
+            var btnLoading = document.getElementById("btnLoadingParitet");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block"; 
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block';
 
             let urlParitet = 'https://corsproxy.io/?https://www.paritetbank.by/private/rates/';
             console.log('URL for POST:', urlParitet);
@@ -426,26 +440,23 @@
                     document.getElementById("print-Paritet-EUR").innerText = rateEUR;
                     document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
                     
-                    button.disabled = false;
-                    button.style.display = 'block';                    
-                    spinner.style.display = 'none';
+                    btnUpdate.style.display = 'block';
+                    btnLoading.style.display = 'none';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
 
         function requestPostBGPB() {
-            var button = document.getElementById("btBGPB");
-            var spinner = document.querySelector("#spinnerBGPB");
+            var btnUpdate = document.getElementById("btnUdateBGPB");
+            var btnLoading = document.getElementById("btnLoadingBGPB");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block"; 
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block';
 
             let urlBGPB = 'https://corsproxy.io/?https://belgazprombank.by/about/kursi_valjut/';
             console.log('URL for POST:', urlBGPB);
@@ -488,26 +499,23 @@
                     document.getElementById("print-BGPB-PLN").innerText = ratePLN;
                     document.getElementById("print-BGPB-TS").innerText = new Date().toLocaleString();
 
-                    button.disabled = false;
-                    button.style.display = 'block';                    
-                    spinner.style.display = 'none';
+                    btnUpdate.style.display = 'block';
+                    btnLoading.style.display = 'none';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
 
         function requestPostMTB() {
-            var button = document.getElementById("btMTB");
-            var spinner = document.querySelector("#spinnerMTB");
+            var btnUpdate = document.getElementById("btnUdateMTB");
+            var btnLoading = document.getElementById("btnLoadingMTB");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block"; 
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block';
 
             let urlMTB = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
             console.log('URL for POST:', urlMTB);
@@ -544,26 +552,23 @@
                     document.getElementById("print-MTB-EUR").innerText = rateEUR;
                     document.getElementById("print-MTB-TS").innerText = new Date().toLocaleString();
 
-                    button.disabled = false;
-                    button.style.display = 'block';                    
-                    spinner.style.display = 'none';
+                    btnUpdate.style.display = 'none';
+                    btnLoading.style.display = 'block';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
 
         function requestPostPayOkay() {
-            var button = document.getElementById("btPayOkay");
-            var spinner = document.querySelector("#spinnerPayOkay");
+            var btnUpdate = document.getElementById("btnUdatePayOkay");
+            var btnLoading = document.getElementById("btnLoadingPayOkay");
 
-            button.disabled = true;
-            button.style.display = "none";    
-            spinner.style.display = "block"; 
+            btnUpdate.style.display = 'none';
+            btnLoading.style.display = 'block';
 
             let urlPayOkay = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
             console.log('URL for POST:', urlPayOkay);
@@ -600,15 +605,13 @@
                     document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
                     document.getElementById("print-PayOkay-TS").innerText = new Date().toLocaleString();
 
-                    button.disabled = false;
-                    button.style.display = 'block';                    
-                    spinner.style.display = 'none';
+                    btnUpdate.style.display = 'block';
+                    btnLoading.style.display = 'none';
                 })
             })
             .catch(error => {
-                button.disabled = false;
-                button.style.display = 'block';                    
-                spinner.style.display = 'none';
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
                 console.error(error);
             });
         }
@@ -619,7 +622,7 @@
             //requestPostAlfa();
             requestPostParitet();
             requestPostBGPB();
-            requestPostMTB();
+            //requestPostMTB();
             requestPostPayOkay();
         }
 
@@ -646,87 +649,8 @@
 
         window.onload = (event) => {
             console.log('onload');
-            //animationButton();
             getExchangeRates();
         };
-
-        function animationButton(idBtn){
-            //var a = document.querySelectorAll('button');
-            //a.forEach(el =>{console.log(el.onclick.value.toString())})
-                //console.log($('button').get.name);
-
-                console.log(idBtn.value['0']);//.querySelector('item'));//.querySelector("item"));
-
-                //let button = document.getElementById(idBtn);            
-                //let button = document.querySelector('#button');
-                //button.textContent = "..."
-                //console.log(button.textContent);
-                
-            //while(button.disabled === 'true'){
-            //    console.log(button.get.name);
-            //}
-
-            //var button = document.getElementById(idBtn);
-            //button.textContent = "Loading.  ";
-
-            //if($('button').hasClass('disabled')){
-            //var button = document.getElementById(idBtn);
-            //var button = document.
-            //console.log(button.textContent);
-
-            //if($('button').{//hasClass('disabled')){
-
-            //}
-
-            //button.disabled = true;
-            //button.textContent = "Loading...";
-            //}
-                //console.log("1111");
-                //console.log($('button').hasClass('disabled'));
-
-                //console.log("start Timer:", Date.parse(new Date()));
-                //button.textContent = "Loading.  ";
-                //var timer1 = new Timer(function() {
-                //    button.textContent = "Loading.. ";
-                    //console.log("runing Timer", Date.parse(new Date()));
-                    //button.textContent = "Loading   ";
-                //}, 3000);
-                //button.textContent = "Loading...";
-                //console.log("Stop Timer", Date.parse(new Date()));
-
-            // while($('button').hasClass('disabled')){//button.disabled = true){
-            //     var timer1 = new Timer(function() {
-            //         button.textContent = "Loading   ";
-            //     }, 250);
-            //     console.log("2222");
-
-            //     var timer2 = new Timer(function() {
-            //         button.textContent = "Loading...";
-            //     }, 250);
-
-                // timer.pause();
-                // button.textContent = "Loading.  ";
-                // timer.resume();
-                
-
-                // timer.pause();
-                // button.textContent = "Loading.. ";
-                // timer.resume();
-
-                // timer.pause();
-                // button.textContent = "Loading...";
-                // timer.resume();
-
-                // timer.pause();
-                // button.textContent = "Loading.. ";
-                // timer.resume();
-
-                // timer.pause();
-                // button.textContent = "Loading.  ";
-                // timer.resume();
-            //}
-        }
-
      </script>
 
 <script>
