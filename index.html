@@ -241,8 +241,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
         console.log('URL for POST:', urlBsb);
@@ -273,17 +273,17 @@
                         document.getElementById("print-BSB-EUR").innerText = rateEUR;
                         document.getElementById("print-BSB-PLN").innerText = ratePLN;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -295,8 +295,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
         console.log('URL for POST:', urlBNB);
@@ -321,17 +321,17 @@
                         document.getElementById("print-BNB-EUR").innerText = rateEUR;
                         document.getElementById("print-BNB-PLN").innerText = ratePLN;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -343,8 +343,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
         console.log('URL for POST:', urlAlfa);
@@ -369,17 +369,17 @@
                         document.getElementById("print-Alfa-USD").innerText = rateUSD;
                         document.getElementById("print-Alfa-EUR").innerText = rateEUR;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -391,8 +391,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlParitet = 'https://corsproxy.io/?https://www.paritetbank.by/private/rates/';
         console.log('URL for POST:', urlParitet);
@@ -420,17 +420,17 @@
                         document.getElementById("print-Paritet-USD").innerText = rateUSD;
                         document.getElementById("print-Paritet-EUR").innerText = rateEUR;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -442,8 +442,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlBGPB = 'https://corsproxy.io/?https://belgazprombank.by/about/kursi_valjut/';
         console.log('URL for POST:', urlBGPB);
@@ -483,17 +483,17 @@
                         document.getElementById("print-BGPB-EUR").innerText = rateEUR;
                         document.getElementById("print-BGPB-PLN").innerText = ratePLN;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -505,8 +505,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlMTB = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
         console.log('URL for POST:', urlMTB);
@@ -543,17 +543,17 @@
                         document.getElementById("print-MTB-USD").innerText = rateUSD;
                         document.getElementById("print-MTB-EUR").innerText = rateEUR;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -565,8 +565,8 @@
             return;
         }
 
-        btnUpdate.style.display = 'none';
-        btnLoading.style.display = 'block';
+        hideElement(btnUpdate);
+        showElement(btnLoading);
 
         let urlPayOkay = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
         console.log('URL for POST:', urlPayOkay);
@@ -603,17 +603,17 @@
                         document.getElementById("print-PayOkay-USD").innerText = rateUSD;
                         document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
 
-                        btnUpdate.style.display = 'block';
                         setBlueColor(btnUpdate);
-                        btnLoading.style.display = 'none';
+                        showElement(btnUpdate);
+                        hideElement(btnLoading);
 
                         sortTable();
                     })
             })
             .catch(error => {
-                btnUpdate.style.display = 'block';
                 setRedColor(btnUpdate);
-                btnLoading.style.display = 'none';
+                showElement(btnUpdate);
+                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -714,6 +714,14 @@
             btn.classList.remove('btn-info');
         if(!btn.classList.contains('btn-danger'))
             btn.classList.add('btn-danger');
+    }
+
+    function showElement(el){
+        el.style.display = 'block';
+    }
+
+    function hideElement(el){
+        el.style.display = 'none';
     }
 
     window.onload = () => {
