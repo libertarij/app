@@ -1,46 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<title>Exchange Rates USD/BYN EUR/BYN BYN/PLN</title>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <style>
         /* Styling the spinner */
-        .spinnerxyz {
-        animation: 1s linear 0s normal none infinite running rot;
-        -webkit-animation: 1s linear 0s normal none infinite running rot;
+        .spinner-xyz {
+            animation: 1s linear 0s normal none infinite running rot;
+            -webkit-animation: 1s linear 0s normal none infinite running rot;
         }
+
         @-webkit-keyframes rot {
-        0% {
-            transform: rotate(0deg);
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(90deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            75% {
+                transform: rotate(270deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
-        25%{
-            transform: rotate(90deg);
-        }
-        50%{
-            transform: rotate(180deg);
-        }
-        75%{
-            transform: rotate(270deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-        }
+
         /* Styling the table*/
         table {
             border-spacing: 0;
             width: 100%;
             border: 1px solid #ddd;
         }
+
         th {
             cursor: pointer;
         }
+
         th, td {
             text-align: left;
             padding: 16px;
         }
+
         tr:nth-child(even) {
             background-color: #f2f2f2
         }
@@ -48,637 +54,631 @@
 </head>
 
 <body>
-    <table class="table table-bordered table-secondary" id="sortTable">
-        <thead class="bg-primary">
-            <tr>
-                <th scope="col">BANK</th>
-                <th scope="col" onclick="sortTable(0)">USD/BYN</th>
-                <th scope="col" onclick="sortTable(1)">EUR/BYN</th>
-                <th scope="col" onclick="sortTable(2)">BYN/PLN</th>
-                <th scope="col">UPDATE</th>
-                <th scope="col">ON DATE</th>
-            </tr>
-        </thead>
-        <tbody class="table-light">
-            <tr>
-                <th><a href="https://www.bsb.by/obmen-valyut">BSB</a></th>
-                <td>
-                    <p id="print-BSB-USD"></p>
-                </td>
-                <td>
-                    <p id="print-BSB-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-BSB-PLN"></p>
-                </td>
-                <td>
-                   <button id="btnLoadingBSB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdateBSB" class="btn btn-primary" type="button" onclick="requestPostBSB()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                <td>
-                    <p id="print-BSB-TS"></p>
-                </td>
-            </tr>
-            <tr>
-                <th><a href="https://bnb.by/kursy-valyut/imbank/">BNB</a></th>
-                <td>
-                    <p id="print-BNB-USD"></p>
-                </td>
-                <td>
-                    <p id="print-BNB-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-BNB-PLN"></p>
-                </td>
-                <td>
-                    <button id="btnLoadingBNB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <!-- <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdateBNB" class="btn btn-primary" type="button" onclick="requestPostBNB()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                </td>
-                <td>
-                    <p id="print-BNB-TS"></p>
-                </td>
-            </tr>
-            <!-- <tr>
-                <th scope="row">Alfa</th>
-                <td>
-                    <p id="print-Alfa-USD"></p>
-                </td>
-                <td>
-                    <p id="print-Alfa-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-Alfa-PLN"></p>
-                </td>
-                <td>
-                    <button id="btnLoadingAlfa" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdateAlfa" class="btn btn-primary" type="button" onclick="requestPostAlfa()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                <td>
-                    <p id="print-Alfa-TS"></p>
-                </td>
-            </tr> -->
-            <tr>
-                <th><a href="https://www.paritetbank.by/private/rates/">Paritet</a></th>
-                <td>
-                    <p id="print-Paritet-USD"></p>
-                </td>
-                <td>
-                    <p id="print-Paritet-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-Paritet-PLN"></p>
-                </td>
-                <td>
-                    <button id="btnLoadingParitet" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdateParitet" class="btn btn-primary" type="button" onclick="requestPostParitet()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                <td>
-                    <p id="print-Paritet-TS"></p>
-                </td>
-            </tr>
-            <tr>
-                <th><a href="https://belgazprombank.by/about/kursi_valjut/">BGPB</a></th>
-                <td>
-                    <p id="print-BGPB-USD"></p>
-                </td>
-                <td>
-                    <p id="print-BGPB-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-BGPB-PLN"></p>
-                </td>
-                <td>
-                    <button id="btnLoadingBGPB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdateBGPB" class="btn btn-primary" type="button" onclick="requestPostBGPB()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                <td>
-                    <p id="print-BGPB-TS"></p>
-                </td>
-            </tr>
-            <!-- <tr>
-                <th><a href="https://www.mtbank.by/courses/cards/">MTB</a></th>
-                <td>
-                    <p id="print-MTB-USD"></p>
-                </td>
-                <td>
-                    <p id="print-MTB-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-MTB-PLN"></p>
-                </td>
-                <td>
-                    <button id="btnLoadingMTB" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdateMTB" class="btn btn-primary" type="button" onclick="requestPostMTB()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                <td>
-                    <p id="print-MTB-TS"></p>
-                </td>
-            </tr> -->
-            <tr>
-                <th><a href="https://www.mtbank.by/courses/cards/">PayOkay</a></th>
-                <td>
-                    <p id="print-PayOkay-USD"></p>
-                </td>
-                <td>
-                    <p id="print-PayOkay-EUR"></p>
-                </td>
-                <td>
-                    <p id="print-PayOkay-PLN"></p>
-                </td>
-                <td>
-                    <button id="btnLoadingPayOkay" style="display: none;" disabled="true" class="btn btn-primary" type="button" disabled>
-                        <div class="spinnerxyz">
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Loading...</span>
-                    </button>
-                    <button id="btnUdatePayOkay" class="btn btn-primary" type="button" onclick="requestPostPayOkay()">
-                        <div>
-                            <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                        </div>
-                        <span class="sr-only">Update</span>
-                    </button>
-                <td>
-                    <p id="print-PayOkay-TS"></p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<table class="table table-bordered table-secondary" id="sortTable">
+    <thead class="bg-primary">
+    <tr>
+        <th scope="col">BANK</th>
+        <th scope="col" onclick="sortTable(0)">USD/BYN</th>
+        <th scope="col" onclick="sortTable(1)">EUR/BYN</th>
+        <th scope="col" onclick="sortTable(2)">BYN/PLN</th>
+        <th scope="col">UPDATE</th>
+        <th scope="col">ON DATE</th>
+    </tr>
+    </thead>
+    <tbody class="table-light">
+    <tr>
+        <th><a href="https://www.bsb.by/obmen-valyut">BSB</a></th>
+        <td>
+            <p id="print-BSB-USD"></p>
+        </td>
+        <td>
+            <p id="print-BSB-EUR"></p>
+        </td>
+        <td>
+            <p id="print-BSB-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingBSB" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdateBSB" class="btn btn-primary" type="button" onclick="requestPostBSB()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        <td>
+            <p id="print-BSB-TS"></p>
+        </td>
+    </tr>
+    <tr>
+        <th><a href="https://bnb.by/kursy-valyut/imbank/">BNB</a></th>
+        <td>
+            <p id="print-BNB-USD"></p>
+        </td>
+        <td>
+            <p id="print-BNB-EUR"></p>
+        </td>
+        <td>
+            <p id="print-BNB-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingBNB" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdateBNB" class="btn btn-primary" type="button" onclick="requestPostBNB()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        </td>
+        <td>
+            <p id="print-BNB-TS"></p>
+        </td>
+    </tr>
+    <tr>
+        <th><a href="https://www.alfabank.by/exchange/digital/">Alfa</a></th>
+        <td>
+            <p id="print-Alfa-USD"></p>
+        </td>
+        <td>
+            <p id="print-Alfa-EUR"></p>
+        </td>
+        <td>
+            <p id="print-Alfa-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingAlfa" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdateAlfa" class="btn btn-primary" type="button" onclick="requestPostAlfa()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        <td>
+            <p id="print-Alfa-TS"></p>
+        </td>
+    </tr>
+    <tr>
+        <th><a href="https://www.paritetbank.by/private/rates/">Paritet</a></th>
+        <td>
+            <p id="print-Paritet-USD"></p>
+        </td>
+        <td>
+            <p id="print-Paritet-EUR"></p>
+        </td>
+        <td>
+            <p id="print-Paritet-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingParitet" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdateParitet" class="btn btn-primary" type="button" onclick="requestPostParitet()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        <td>
+            <p id="print-Paritet-TS"></p>
+        </td>
+    </tr>
+    <tr>
+        <th><a href="https://belgazprombank.by/about/kursi_valjut/">BGPB</a></th>
+        <td>
+            <p id="print-BGPB-USD"></p>
+        </td>
+        <td>
+            <p id="print-BGPB-EUR"></p>
+        </td>
+        <td>
+            <p id="print-BGPB-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingBGPB" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdateBGPB" class="btn btn-primary" type="button" onclick="requestPostBGPB()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        <td>
+            <p id="print-BGPB-TS"></p>
+        </td>
+    </tr>
+    <tr>
+        <th><a href="https://www.mtbank.by/courses/cards/">MTB</a></th>
+        <td>
+            <p id="print-MTB-USD"></p>
+        </td>
+        <td>
+            <p id="print-MTB-EUR"></p>
+        </td>
+        <td>
+            <p id="print-MTB-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingMTB" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdateMTB" class="btn btn-primary" type="button" onclick="requestPostMTB()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        <td>
+            <p id="print-MTB-TS"></p>
+        </td>
+    </tr>
+    <tr>
+        <th><a href="https://www.mtbank.by/courses/cards/">PayOkay</a></th>
+        <td>
+            <p id="print-PayOkay-USD"></p>
+        </td>
+        <td>
+            <p id="print-PayOkay-EUR"></p>
+        </td>
+        <td>
+            <p id="print-PayOkay-PLN"></p>
+        </td>
+        <td>
+            <button id="btnLoadingPayOkay" style="display: none;" class="btn btn-primary" type="button" disabled>
+                <section class="spinner-xyz">
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </section>
+                <span class="sr-only">Loading...</span>
+            </button>
+            <button id="btnUpdatePayOkay" class="btn btn-primary" type="button" onclick="requestPostPayOkay()">
+                <div>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                </div>
+                <span class="sr-only">Update</span>
+            </button>
+        <td>
+            <p id="print-PayOkay-TS"></p>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <script>
-        function requestPostBSB() {
-            var btnUpdate = document.getElementById("btnUdateBSB");
-            var btnLoading = document.getElementById("btnLoadingBSB");
+<script>
+    function requestPostBSB() {
+        const btnUpdate = document.getElementById("btnUpdateBSB");
+        const btnLoading = document.getElementById("btnLoadingBSB");
 
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block';
-  
-            let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
-            console.log('URL for POST:', urlBsb);
-            let nowDate = Date.parse(new Date());
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
 
-            fetch(urlBsb, {
-                body: JSON.stringify({
-                    'period': nowDate,
-                    'type': 'CARD'
-                }),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-                },
-                method: 'POST',
-                redirect: 'follow'
-            })
+        let urlBsb = 'https://mobile.bsb.by/api/v1/free-zone-management/exchange-rates/rates';
+        console.log('URL for POST:', urlBsb);
+
+        fetch(urlBsb, {
+            body: JSON.stringify({
+                'period': Date.parse(new Date().toString()),
+                'type': 'CARD'
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+            },
+            method: 'POST',
+            redirect: 'follow'
+        })
             .then(response => {
                 response.json()
-                .then(res => {
-                let rates = res['rates'];
+                    .then(res => {
+                        let rates = res['rates'];
 
-                let rateUSD = rates[0].sellAmount.toFixed(4);
-                let rateEUR = rates[1].sellAmount.toFixed(4);
-                let ratePLN = (1 / rates[6].sellAmount).toFixed(4);
+                        let rateUSD = rates[0].sellAmount.toFixed(4);
+                        let rateEUR = rates[1].sellAmount.toFixed(4);
+                        let ratePLN = (1 / rates[6].sellAmount).toFixed(4);
 
-                document.getElementById("print-BSB-USD").innerText = rateUSD;
-                document.getElementById("print-BSB-EUR").innerText = rateEUR;
-                document.getElementById("print-BSB-PLN").innerText = ratePLN;
-                document.getElementById("print-BSB-TS").innerText = new Date().toLocaleString();
+                        document.getElementById("print-BSB-USD").innerText = rateUSD;
+                        document.getElementById("print-BSB-EUR").innerText = rateEUR;
+                        document.getElementById("print-BSB-PLN").innerText = ratePLN;
+                        document.getElementById("print-BSB-TS").innerText = new Date().toLocaleString();
 
-                btnUpdate.style.display = 'block';
-                btnLoading.style.display = 'none';
-                })
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
-        }
+    }
 
-        function requestPostBNB() {
-            var btnUpdate = document.getElementById("btnUdateBNB");
-            var btnLoading = document.getElementById("btnLoadingBNB");
+    function requestPostBNB() {
+        const btnUpdate = document.getElementById("btnUpdateBNB");
+        const btnLoading = document.getElementById("btnLoadingBNB");
 
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block';
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
 
-            let urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
-            console.log('URL for POST:', urlBNB);
+        let urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
+        console.log('URL for POST:', urlBNB);
 
-            fetch(urlBNB, {
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-                }
-            })
+        fetch(urlBNB, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+            }
+        })
             .then(response => {
-                response.start
-                response.event
                 response.text()
-                .then(res => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(res, "text/html");
-                    let rates = JSON.parse(doc.querySelector('input.jsConfig').value);
-
-                    let rateUSD = rates['USD']['BYN']['SALE'].toFixed(4);
-                    let rateEUR = rates['EUR']['BYN']['SALE'].toFixed(4);
-                    let ratePLN = (1 / rates['PLN']['BYN']['SALE']).toFixed(4);
-
-                    document.getElementById("print-BNB-USD").innerText = rateUSD;
-                    document.getElementById("print-BNB-EUR").innerText = rateEUR;
-                    document.getElementById("print-BNB-PLN").innerText = ratePLN;
-                    document.getElementById("print-BNB-TS").innerText = new Date().toLocaleString();
-                    
-                    btnUpdate.style.display = 'block';
-                    btnLoading.style.display = 'none';
-                })
-            })
-            .catch(error => {
-                btnUpdate.style.display = 'block';
-                btnLoading.style.display = 'none';
-                console.error(error);
-            });
-        }
-
-        function requestPostAlfa() {
-            var btnUpdate = document.getElementById("btnUdateAlfa");
-            var btnLoading = document.getElementById("btnLoadingAlfa");
-
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block'; 
-
-            let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
-            console.log('URL for POST:', urlAlfa);
-
-            fetch(urlAlfa, {
-                cors: 'no-cors',
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-                }
-            })
-                .then(response => {
-                    response.text()
                     .then(res => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(res, "text/html");
-                    let obj = doc.querySelector('div.section-content div[data-component]');
-                    let rates = JSON.parse(obj.getAttribute('data-initial'));
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "text/html");
+                        let rates = JSON.parse(doc.querySelector('input.jsConfig').value);
 
-                    let rateUSD = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['0']['sell']['value']).toFixed(4);
-                    let rateEUR = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['1']['sell']['value']).toFixed(4);
+                        let rateUSD = rates['USD']['BYN']['SALE'].toFixed(4);
+                        let rateEUR = rates['EUR']['BYN']['SALE'].toFixed(4);
+                        let ratePLN = (1 / rates['PLN']['BYN']['SALE']).toFixed(4);
 
-                    document.getElementById("print-Alfa-USD").innerText = rateUSD;
-                    document.getElementById("print-Alfa-EUR").innerText = rateEUR;
-                    document.getElementById("print-Alfa-TS").innerText = new Date().toLocaleString();
-                    
-                    btnUpdate.style.display = 'block';
-                    btnLoading.style.display = 'none';
-                })
+                        document.getElementById("print-BNB-USD").innerText = rateUSD;
+                        document.getElementById("print-BNB-EUR").innerText = rateEUR;
+                        document.getElementById("print-BNB-PLN").innerText = ratePLN;
+                        document.getElementById("print-BNB-TS").innerText = new Date().toLocaleString();
+
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
-        }
+    }
 
-        function requestPostParitet() {
-            var btnUpdate = document.getElementById("btnUdateParitet");
-            var btnLoading = document.getElementById("btnLoadingParitet");
+    function requestPostAlfa() {
+        const btnUpdate = document.getElementById("btnUpdateAlfa");
+        const btnLoading = document.getElementById("btnLoadingAlfa");
 
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block';
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
 
-            let urlParitet = 'https://corsproxy.io/?https://www.paritetbank.by/private/rates/';
-            console.log('URL for POST:', urlParitet);
-            let nowDate = Date.parse(new Date());
+        let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
+        console.log('URL for POST:', urlAlfa);
 
-            fetch(urlParitet, {
-                cors: 'no-cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-                },
-                method: 'GET',
-            })
-                .then(response => {
-                    //console.log(response);
-                    response.text()
+        fetch(urlAlfa, {
+            cors: 'no-cors',
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+            }
+        })
+            .then(response => {
+                response.text()
                     .then(res => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(res, "text/html");
-                    let conversion  = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "text/html");
+                        let obj = doc.querySelector('div.section-content div[data-component]');
+                        let rates = JSON.parse(obj.getAttribute('data-initial'));
 
-                    let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}")+1));
-                    let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
-                    let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
+                        let rateUSD = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['0']['sell']['value']).toFixed(4);
+                        let rateEUR = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['1']['sell']['value']).toFixed(4);
 
-                    document.getElementById("print-Paritet-USD").innerText = rateUSD;
-                    document.getElementById("print-Paritet-EUR").innerText = rateEUR;
-                    document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
-                    
-                    btnUpdate.style.display = 'block';
-                    btnLoading.style.display = 'none';
-                })
+                        document.getElementById("print-Alfa-USD").innerText = rateUSD;
+                        document.getElementById("print-Alfa-EUR").innerText = rateEUR;
+                        document.getElementById("print-Alfa-TS").innerText = new Date().toLocaleString();
+
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
-        }
+    }
 
-        function requestPostBGPB() {
-            var btnUpdate = document.getElementById("btnUdateBGPB");
-            var btnLoading = document.getElementById("btnLoadingBGPB");
+    function requestPostParitet() {
+        const btnUpdate = document.getElementById("btnUpdateParitet");
+        const btnLoading = document.getElementById("btnLoadingParitet");
 
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block';
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
 
-            let urlBGPB = 'https://corsproxy.io/?https://belgazprombank.by/about/kursi_valjut/';
-            console.log('URL for POST:', urlBGPB);
-            let nowDate = Date.parse(new Date());
+        let urlParitet = 'https://corsproxy.io/?https://www.paritetbank.by/private/rates/';
+        console.log('URL for POST:', urlParitet);
 
-            fetch(urlBGPB, {
-                cors: 'no-cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-                },
-                method: 'GET',
-            })
-                .then(response => {
-                    //console.log(response);
-                    response.text()
+        fetch(urlParitet, {
+            cors: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+            },
+            method: 'GET',
+        })
+            .then(response => {
+                response.text()
                     .then(res => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(res, "text/html");
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "text/html");
+                        let conversion = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;
 
-                    let conversionUSD  = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartUSD")).innerText;
-                    let conversionEUR  = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartEUR")).innerText;
-                    let conversionPLN  = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartPLN")).innerText;
+                        let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}") + 1));
+                        let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
+                        let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
 
-                    let objUSD = conversionUSD.substring(conversionUSD.indexOf("[["), conversionUSD.lastIndexOf("]]")+2);
-                    let objEUR = conversionEUR.substring(conversionEUR.indexOf("[["), conversionEUR.lastIndexOf("]]")+2);
-                    let objPLN = conversionPLN.substring(conversionPLN.indexOf("[["), conversionPLN.lastIndexOf("]]")+2);
+                        document.getElementById("print-Paritet-USD").innerText = rateUSD;
+                        document.getElementById("print-Paritet-EUR").innerText = rateEUR;
+                        document.getElementById("print-Paritet-TS").innerText = new Date().toLocaleString();
 
-                    let jsUSD = JSON.parse(objUSD);
-                    let jsEUR = JSON.parse(objEUR);
-                    let jsPLN = JSON.parse(objPLN);
-
-                    let rateUSD = (jsUSD[1][jsUSD['1']['length']-1]).toFixed(4);
-                    let rateEUR = (jsEUR[1][jsEUR['1']['length']-1]).toFixed(4);
-                    let ratePLN = (10/jsPLN[1][jsPLN['1']['length']-1]).toFixed(4);
-
-                    document.getElementById("print-BGPB-USD").innerText = rateUSD;
-                    document.getElementById("print-BGPB-EUR").innerText = rateEUR;
-                    document.getElementById("print-BGPB-PLN").innerText = ratePLN;
-                    document.getElementById("print-BGPB-TS").innerText = new Date().toLocaleString();
-
-                    btnUpdate.style.display = 'block';
-                    btnLoading.style.display = 'none';
-                })
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
-        }
+    }
 
-        function requestPostMTB() {
-            var btnUpdate = document.getElementById("btnUdateMTB");
-            var btnLoading = document.getElementById("btnLoadingMTB");
+    function requestPostBGPB() {
+        const btnUpdate = document.getElementById("btnUpdateBGPB");
+        const btnLoading = document.getElementById("btnLoadingBGPB");
 
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block';
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
 
-            let urlMTB = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
-            console.log('URL for POST:', urlMTB);
-            let nowDate = Date.parse(new Date());
+        let urlBGPB = 'https://corsproxy.io/?https://belgazprombank.by/about/kursi_valjut/';
+        console.log('URL for POST:', urlBGPB);
 
-            fetch(urlMTB, {
-                cors: 'no-cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-                },
-                method: 'GET',
-            })
-                .then(response => {
-                    response.text()
+        fetch(urlBGPB, {
+            cors: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+            },
+            method: 'GET',
+        })
+            .then(response => {
+                response.text()
                     .then(res => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(res, "application/xml");
-                                
-                    let rateUSD;
-                    let rateEUR;
-                    
-                    let currencies = doc.querySelectorAll('cards currency');
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "text/html");
 
-                    currencies.forEach(currency => {
-                    if (currency.querySelector('code').textContent==="USD" && currency.querySelector('codeTo').textContent==="BYN") {
-                        rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
-                    if (currency.querySelector('code').textContent==="EUR" && currency.querySelector('codeTo').textContent==="BYN") {
-                        rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
-                    });
+                        let conversionUSD = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartUSD")).innerText;
+                        let conversionEUR = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartEUR")).innerText;
+                        let conversionPLN = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartPLN")).innerText;
 
-                    document.getElementById("print-MTB-USD").innerText = rateUSD;
-                    document.getElementById("print-MTB-EUR").innerText = rateEUR;
-                    document.getElementById("print-MTB-TS").innerText = new Date().toLocaleString();
+                        let objUSD = conversionUSD.substring(conversionUSD.indexOf("[["), conversionUSD.lastIndexOf("]]") + 2);
+                        let objEUR = conversionEUR.substring(conversionEUR.indexOf("[["), conversionEUR.lastIndexOf("]]") + 2);
+                        let objPLN = conversionPLN.substring(conversionPLN.indexOf("[["), conversionPLN.lastIndexOf("]]") + 2);
 
-                    btnUpdate.style.display = 'none';
-                    btnLoading.style.display = 'block';
-                })
+                        let jsUSD = JSON.parse(objUSD);
+                        let jsEUR = JSON.parse(objEUR);
+                        let jsPLN = JSON.parse(objPLN);
+
+                        let rateUSD = (jsUSD[1][jsUSD['1']['length'] - 1]).toFixed(4);
+                        let rateEUR = (jsEUR[1][jsEUR['1']['length'] - 1]).toFixed(4);
+                        let ratePLN = (10 / jsPLN[1][jsPLN['1']['length'] - 1]).toFixed(4);
+
+                        document.getElementById("print-BGPB-USD").innerText = rateUSD;
+                        document.getElementById("print-BGPB-EUR").innerText = rateEUR;
+                        document.getElementById("print-BGPB-PLN").innerText = ratePLN;
+                        document.getElementById("print-BGPB-TS").innerText = new Date().toLocaleString();
+
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
-        }
+    }
 
-        function requestPostPayOkay() {
-            var btnUpdate = document.getElementById("btnUdatePayOkay");
-            var btnLoading = document.getElementById("btnLoadingPayOkay");
+    function requestPostMTB() {
+        const btnUpdate = document.getElementById("btnUpdateMTB");
+        const btnLoading = document.getElementById("btnLoadingMTB");
 
-            btnUpdate.style.display = 'none';
-            btnLoading.style.display = 'block';
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
 
-            let urlPayOkay = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
-            console.log('URL for POST:', urlPayOkay);
-            let nowDate = Date.parse(new Date());
+        let urlMTB = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
+        console.log('URL for POST:', urlMTB);
 
-            fetch(urlPayOkay, {
-                cors: 'no-cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-                },
-                method: 'GET',
-            })
-                .then(response => {
-                    response.text()
+        fetch(urlMTB, {
+            cors: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+            },
+            method: 'GET',
+        })
+            .then(response => {
+                response.text()
                     .then(res => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(res, "application/xml");
-                                
-                    let rateUSD;
-                    let rateEUR;
-                    
-                    let currencies = doc.querySelectorAll('payokay currency');
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "application/xml");
 
-                    currencies.forEach(currency => {
-                    if (currency.querySelector('code').textContent==="USD" && currency.querySelector('codeTo').textContent==="BYN") {
-                        rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
-                    if (currency.querySelector('code').textContent==="EUR" && currency.querySelector('codeTo').textContent==="BYN") {
-                        rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);}
-                    });
+                        let rateUSD;
+                        let rateEUR;
 
-                    document.getElementById("print-PayOkay-USD").innerText = rateUSD;
-                    document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
-                    document.getElementById("print-PayOkay-TS").innerText = new Date().toLocaleString();
+                        let currencies = doc.querySelectorAll('cards currency');
 
-                    btnUpdate.style.display = 'block';
-                    btnLoading.style.display = 'none';
-                })
+                        currencies.forEach(currency => {
+                            if (currency.querySelector('code').textContent === "USD" && currency.querySelector('codeTo').textContent === "BYN") {
+                                rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                            }
+                            if (currency.querySelector('code').textContent === "EUR" && currency.querySelector('codeTo').textContent === "BYN") {
+                                rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                            }
+                        });
+
+                        document.getElementById("print-MTB-USD").innerText = rateUSD;
+                        document.getElementById("print-MTB-EUR").innerText = rateEUR;
+                        document.getElementById("print-MTB-TS").innerText = new Date().toLocaleString();
+
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
-        }
-      
-        function getExchangeRates() {
-            requestPostBSB();
-            requestPostBNB();
-            //requestPostAlfa();
-            requestPostParitet();
-            requestPostBGPB();
-            //requestPostMTB();
-            requestPostPayOkay();
-        }
+    }
 
-        window.onload = (event) => {
-            console.log('onload');
-            getExchangeRates();
-        };
-     </script>
+    function requestPostPayOkay() {
+        const btnUpdate = document.getElementById("btnUpdatePayOkay");
+        const btnLoading = document.getElementById("btnLoadingPayOkay");
+
+        btnUpdate.style.display = 'none';
+        btnLoading.style.display = 'block';
+
+        let urlPayOkay = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
+        console.log('URL for POST:', urlPayOkay);
+
+        fetch(urlPayOkay, {
+            cors: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+            },
+            method: 'GET',
+        })
+            .then(response => {
+                response.text()
+                    .then(res => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "application/xml");
+
+                        let rateUSD;
+                        let rateEUR;
+
+                        let currencies = doc.querySelectorAll('payokay currency');
+
+                        currencies.forEach(currency => {
+                            if (currency.querySelector('code').textContent === "USD" && currency.querySelector('codeTo').textContent === "BYN") {
+                                rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                            }
+                            if (currency.querySelector('code').textContent === "EUR" && currency.querySelector('codeTo').textContent === "BYN") {
+                                rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                            }
+                        });
+
+                        document.getElementById("print-PayOkay-USD").innerText = rateUSD;
+                        document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
+                        document.getElementById("print-PayOkay-TS").innerText = new Date().toLocaleString();
+
+                        btnUpdate.style.display = 'block';
+                        btnLoading.style.display = 'none';
+                    })
+            })
+            .catch(error => {
+                btnUpdate.style.display = 'block';
+                btnLoading.style.display = 'none';
+                console.error(error);
+            });
+    }
+
+    function getExchangeRates() {
+        requestPostBSB();
+        requestPostBNB();
+        requestPostAlfa();
+        requestPostParitet();
+        requestPostBGPB();
+        requestPostMTB();
+        requestPostPayOkay();
+    }
+
+    window.onload = (event) => {
+        console.log('onload');
+        getExchangeRates();
+    };
+</script>
 
 <script>
     function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("sortTable");
-    switching = true;
-    // Set the sorting direction to ascending:
-    dir = "asc";
-    /* Make a loop that will continue until
-    no switching has been done: */
-    while (switching) {
-        // Start by saying: no switching is done:
-        switching = false;
-        rows = table.rows;
-        /* Loop through all table rows (except the
-        first, which contains table headers): */
-        for (i = 1; i < (rows.length - 1); i++) {
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Get the two elements you want to compare,
-            one from current row and one from the next: */
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
-            /* Check if the two rows should switch place,
-            based on the direction, asc or desc: */
-            if (dir == "asc") {
-                if (Number.parseFloat(x.innerText) > Number.parseFloat(y.innerText)) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-                }
-            } else if (dir == "desc") {
-                if (Number.parseFloat(x.innerText) < Number.parseFloat(y.innerText)) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
+        table = document.getElementById("sortTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir === "asc") {
+                    if (Number.parseFloat(x.innerText) > Number.parseFloat(y.innerText)) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (Number.parseFloat(x.innerText) < Number.parseFloat(y.innerText)) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
                 }
             }
-        }
-        if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            // Each time a switch is done, increase this count by 1:
-            switchcount ++;
-        } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                 switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchCount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
             }
         }
-    }
     }
 </script>
 </body>
