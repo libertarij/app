@@ -120,7 +120,7 @@
                 </section>
                 <span class="sr-only">Loading...</span>
             </button>
-            <button id="btnUpdateAlfa" class="btn btn-sm btn-danger" type="button" onclick="requestPostAlfa()">
+            <button id="btnUpdateAlfa" class="btn btn-sm btn-info" type="button" onclick="requestPostAlfa()">
                 <div>
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
                 </div>
@@ -271,10 +271,7 @@
                         document.getElementById("print-BSB-PLN").innerText = ratePLN;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -282,10 +279,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -325,10 +319,7 @@
                         document.getElementById("print-BNB-PLN").innerText = ratePLN;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -336,10 +327,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -379,10 +367,7 @@
                         document.getElementById("print-Alfa-EUR").innerText = rateEUR;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -390,10 +375,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -436,10 +418,7 @@
                         document.getElementById("print-Paritet-EUR").innerText = rateEUR;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -447,10 +426,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -505,10 +481,7 @@
                         document.getElementById("print-BGPB-PLN").innerText = ratePLN;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -516,10 +489,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -571,10 +541,7 @@
                         document.getElementById("print-MTB-EUR").innerText = rateEUR;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -582,10 +549,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -637,10 +601,7 @@
                         document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
 
                         btnUpdate.style.display = 'block';
-                        if(btnUpdate.classList.contains('btn-danger'))
-                            btnUpdate.classList.remove('btn-danger');
-                        if(!btnUpdate.classList.contains('btn-info'))
-                            btnUpdate.classList.add('btn-info');
+                        setBlueColor(btnUpdate);
                         btnLoading.style.display = 'none';
 
                         sortTable();
@@ -648,10 +609,7 @@
             })
             .catch(error => {
                 btnUpdate.style.display = 'block';
-                if(btnUpdate.classList.contains('btn-info'))
-                    btnUpdate.classList.remove('btn-info');
-                if(!btnUpdate.classList.contains('btn-danger'))
-                    btnUpdate.classList.add('btn-danger');
+                setRedColor(btnUpdate);
                 btnLoading.style.display = 'none';
                 console.error(error);
             });
@@ -739,6 +697,20 @@
                 }
             }
         }
+    }
+
+    function setBlueColor(btn){
+        if(btn.classList.contains('btn-danger'))
+            btn.classList.remove('btn-danger');
+        if(!btn.classList.contains('btn-info'))
+            btn.classList.add('btn-info');
+    }
+
+    function setRedColor(btn){
+        if(btn.classList.contains('btn-info'))
+            btn.classList.remove('btn-info');
+        if(!btn.classList.contains('btn-danger'))
+            btn.classList.add('btn-danger');
     }
 
     window.onload = () => {
