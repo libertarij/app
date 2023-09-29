@@ -32,19 +32,20 @@
             }
         }
 
-        /* Styling the table */
-        table {
-            min-width: 640px;
+        body {
+            font-size: 2rem;
+            background-color: #343a40;
         }
+
         table th {
             cursor: pointer;
         }
     </style>
 </head>
-
 <body>
-<table class="table-striped table-info table-hover" id="sortTable">
-    <thead>
+
+<table class="table table-striped table-info table-hover" id="sortTable">
+    <thead class="thead-dark">
     <tr class="bg-info">
         <th scope="col">BANK</th>
         <th scope="col" onclick="sortTable(0)">USD/BYN</th>
@@ -234,10 +235,13 @@
 </table>
 
 <script>
+
+    const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
+
     function requestPostBSB() {
         const btnUpdate = document.getElementById("btnUpdateBSB");
         const btnLoading = document.getElementById("btnLoadingBSB");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -255,7 +259,7 @@
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                'User-Agent': userAgent
             },
             method: 'POST',
             redirect: 'follow'
@@ -291,7 +295,7 @@
     function requestPostBNB() {
         const btnUpdate = document.getElementById("btnUpdateBNB");
         const btnLoading = document.getElementById("btnLoadingBNB");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -302,8 +306,9 @@
         console.log('URL for POST:', urlBNB);
 
         fetch(urlBNB, {
+            cors: 'no-cors',
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+                'User-Agent': userAgent
             }
         })
             .then(response => {
@@ -339,7 +344,7 @@
     function requestPostAlfa() {
         const btnUpdate = document.getElementById("btnUpdateAlfa");
         const btnLoading = document.getElementById("btnLoadingAlfa");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -352,7 +357,7 @@
         fetch(urlAlfa, {
             cors: 'no-cors',
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+                'User-Agent': userAgent
             }
         })
             .then(response => {
@@ -387,7 +392,7 @@
     function requestPostParitet() {
         const btnUpdate = document.getElementById("btnUpdateParitet");
         const btnLoading = document.getElementById("btnLoadingParitet");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -400,9 +405,7 @@
         fetch(urlParitet, {
             cors: 'no-cors',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                'User-Agent': userAgent
             },
             method: 'GET',
         })
@@ -438,7 +441,7 @@
     function requestPostBGPB() {
         const btnUpdate = document.getElementById("btnUpdateBGPB");
         const btnLoading = document.getElementById("btnLoadingBGPB");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -451,9 +454,7 @@
         fetch(urlBGPB, {
             cors: 'no-cors',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                'User-Agent': userAgent
             },
             method: 'GET',
         })
@@ -501,7 +502,7 @@
     function requestPostMTB() {
         const btnUpdate = document.getElementById("btnUpdateMTB");
         const btnLoading = document.getElementById("btnLoadingMTB");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -514,9 +515,7 @@
         fetch(urlMTB, {
             cors: 'no-cors',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                'User-Agent': userAgent
             },
             method: 'GET',
         })
@@ -561,7 +560,7 @@
     function requestPostPayOkay() {
         const btnUpdate = document.getElementById("btnUpdatePayOkay");
         const btnLoading = document.getElementById("btnLoadingPayOkay");
-        if (!btnUpdate && !btnLoading) {
+        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
             return;
         }
 
@@ -574,9 +573,7 @@
         fetch(urlPayOkay, {
             cors: 'no-cors',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+                'User-Agent': userAgent
             },
             method: 'GET',
         })
@@ -638,13 +635,20 @@
         dir = "asc";
         desc = true;
         if (n === undefined || n === null) {
-            if (colNum === undefined || colNum === null) {
+            if (!isExist(colNum)) {
                 colNum = 0;
             }
             desc = false;
         } else {
             colNum = n;
         }
+
+        rows = table.rows;
+        for (const thElement of rows[0].getElementsByTagName("th")) {
+            thElement.classList.remove("bg-success");
+        }
+        rows[0].getElementsByTagName("th")[colNum + 1].classList.add("bg-success");
+
         /* Make a loop that will continue until
         no switching has been done: */
         while (switching) {
@@ -702,26 +706,30 @@
         }
     }
 
-    function setBlueColor(btn){
-        if(btn.classList.contains('btn-danger'))
+    function setBlueColor(btn) {
+        if (btn.classList.contains('btn-danger'))
             btn.classList.remove('btn-danger');
-        if(!btn.classList.contains('btn-info'))
+        if (!btn.classList.contains('btn-info'))
             btn.classList.add('btn-info');
     }
 
-    function setRedColor(btn){
-        if(btn.classList.contains('btn-info'))
+    function setRedColor(btn) {
+        if (btn.classList.contains('btn-info'))
             btn.classList.remove('btn-info');
-        if(!btn.classList.contains('btn-danger'))
+        if (!btn.classList.contains('btn-danger'))
             btn.classList.add('btn-danger');
     }
 
-    function showElement(el){
+    function showElement(el) {
         el.style.display = 'block';
     }
 
-    function hideElement(el){
+    function hideElement(el) {
         el.style.display = 'none';
+    }
+
+    function isExist(el) {
+        return !(el === undefined || el === null)
     }
 
     window.onload = () => {
@@ -729,6 +737,6 @@
         getExchangeRates();
     };
 </script>
-</body>
 
+</body>
 </html>
