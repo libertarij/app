@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<div class="container-fluid" style="max-width: 24em">
+<div class="container-fluid" style="max-width: 30em">
     <table class="table table-striped table-info table-hover" id="sortTable">
         <thead class="thead-dark">
         <tr class="bg-info">
@@ -56,7 +56,10 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row"><a class="badge badge-danger" href="https://www.bsb.by/obmen-valyut">BSB</a></th>
+            <th scope="row">
+                <a class="badge badge-danger" href="https://www.bsb.by/obmen-valyut">BSB</a>
+                <span style="font-size: 0.3em" class="badge badge-light bg-sm">PLN|EUR</span>
+            </th>
             <td>
                 <section id="print-BSB-USD"></section>
             </td>
@@ -76,7 +79,10 @@
                 </button>
         </tr>
         <tr>
-            <th scope="row"><a class="badge badge-warning" href="https://bnb.by/kursy-valyut/imbank/">BNB</a></th>
+            <th scope="row">
+                <a class="badge badge-warning" href="https://bnb.by/kursy-valyut/imbank/">BNB</a>
+                <span style="font-size: 0.3em" class="badge badge-light bg-sm">CNY|USD</span>
+            </th>
             <td>
                 <section id="print-BNB-USD"></section>
             </td>
@@ -97,7 +103,10 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><a class="badge badge-dark" href="https://www.alfabank.by/exchange/digital/">Alfa</a></th>
+            <th scope="row">
+                <a class="badge badge-dark" href="https://www.alfabank.by/exchange/digital/">Alfa</a>
+                <span style="font-size: 0.3em" class="badge badge-light bg-sm">CYN|USD</span>
+            </th>
             <td>
                 <section id="print-Alfa-USD"></section>
             </td>
@@ -159,7 +168,10 @@
                 </button>
         </tr>
         <tr>
-            <th scope="row"><a class="badge badge-secondary" href="https://www.mtbank.by/courses/cards/">MTB</a></th>
+            <th scope="row">
+                <a class="badge badge-secondary" href="https://www.mtbank.by/courses/cards/">MTB</a>
+                <span style="font-size: 0.3em" class="badge badge-light bg-sm">USD|USD</span>
+            </th>
             <td>
                 <section id="print-MTB-USD"></section>
             </td>
@@ -179,7 +191,10 @@
                 </button>
         </tr>
         <tr>
-            <th scope="row"><a class="badge badge-success" href="https://www.mtbank.by/courses/cards/">PayOkay</a></th>
+            <th scope="row">
+                <a class="badge badge-success" href="https://www.mtbank.by/courses/cards/">PayOkay</a>
+                <span style="font-size: 0.3em" class="badge badge-light bg-sm">USD|USD</span>
+            </th>
             <td>
                 <section id="print-PayOkay-USD"></section>
             </td>
@@ -201,7 +216,7 @@
         </tbody>
     </table>
 
-    <div class="container-fluid" style="max-width: 13em">
+    <div class="container-fluid" style="max-width: 15em">
         <div class="input-group  input-group-lg">
             <div class="input-group-prepend" style="font-size: x-large">
                 <button style="font-size: x-large" id="btnUpdateBGPB2" class="btn btn-lg btn-primary" type="button"
@@ -235,6 +250,12 @@
                     <span class="sr-only">Update Visa</span>
                 </button>
             </th>
+            <th scope="col">
+                <button id="btnUpdateRev" class="btn btn-lg btn-light" type="button" onclick="updateRev()">
+                    <span>Revolut   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Update Revolut</span>
+                </button>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -242,26 +263,31 @@
             <th scope="row">EUR->USD</th>
             <td><span id="EUR-USD-MC"></span></td>
             <td><span id="EUR-USD-VISA"></span></td>
+            <td><span id="EUR-USD-REV"></span></td>
         </tr>
         <tr>
             <th scope="row">USD->EUR</th>
             <td><span id="USD-EUR-MC"></span></td>
             <td><span id="USD-EUR-VISA"></span></td>
+            <td><span id="USD-EUR-REV"></span></td>
         </tr>
         <tr>
             <th scope="row">PLN->USD</th>
             <td><span id="PLN-USD-MC"></span></td>
             <td><span id="PLN-USD-VISA"></span></td>
+            <td><span id="PLN-USD-REV"></span></td>
         </tr>
         <tr>
             <th scope="row">PLN->EUR</th>
             <td><span id="PLN-EUR-MC"></span></td>
             <td><span id="PLN-EUR-VISA"></span></td>
+            <td><span id="PLN-EUR-REV"></span></td>
         </tr>
-        <tr>
+        <tr class="table-dark">
             <th scope="row">PLN->BYN</th>
             <td><span id="PLN-BYN-MC"></span></td>
             <td><span id="PLN-BYN-VISA"></span></td>
+            <td><span id="PLN-BYN-REV"></span></td>
         </tr>
         </tbody>
     </table>
@@ -271,6 +297,150 @@
 <script>
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
+
+    function updateRev() {
+        const btnUpdate = document.getElementById("btnUpdateRev");
+        if (!isExist(btnUpdate)) {
+            return;
+        }
+
+        const elEURtoUSDbyRev = document.getElementById("EUR-USD-REV");
+        const elUSDtoEURbyRev = document.getElementById("USD-EUR-REV");
+        const elPLNtoUSDbyRev = document.getElementById("PLN-USD-REV");
+        const elPLNtoEURbyRev = document.getElementById("PLN-EUR-REV");
+        const elPLNtoBYNbyRev = document.getElementById("PLN-BYN-REV");
+
+        const urlRev = 'https://corsproxy.io/?https://www.revolut.com/api/exchange/quote?';
+
+        elEURtoUSDbyRev.innerText = null;
+        fetch(urlRev + new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'USD',
+            toCurrency: 'EUR',
+            amount: 1,
+            isRecipientAmount: false
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elEURtoUSDbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                })
+        }).catch(error => {
+            elEURtoUSDbyRev.innerText = 'error';
+            console.error(error);
+        });
+
+        elUSDtoEURbyRev.innerText = null;
+        fetch(urlRev + new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'EUR',
+            toCurrency: 'USD',
+            amount: 1,
+            isRecipientAmount: false
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    console.log(res)
+                    elUSDtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
+                })
+        }).catch(error => {
+            elUSDtoEURbyRev.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoUSDbyRev.innerText = null;
+        fetch(urlRev + new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'USD',
+            toCurrency: 'PLN',
+            amount: 1,
+            isRecipientAmount: false
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    console.log(res)
+                    elPLNtoUSDbyRev.innerText = (res.rate.rate).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoUSDbyRev.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoEURbyRev.innerText = null;
+        fetch(urlRev + new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'EUR',
+            toCurrency: 'PLN',
+            amount: 1,
+            isRecipientAmount: false
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    console.log(res)
+                    elPLNtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoEURbyRev.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoBYNbyRev.innerText = null;
+        fetch(urlRev + new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'BYN',
+            toCurrency: 'PLN',
+            amount: 1,
+            isRecipientAmount: false
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    console.log(res)
+                    elPLNtoBYNbyRev.innerText = (res.rate.rate).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoBYNbyRev.innerText = 'error';
+            console.error(error);
+        });
+    }
 
     function updateMC() {
         const btnUpdate = document.getElementById("btnUpdateMC");
