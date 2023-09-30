@@ -34,7 +34,7 @@
 
         body {
             font-size: 2rem;
-            background-color: #343a40;
+            background-color: gray;
         }
 
         table th {
@@ -44,185 +44,560 @@
 </head>
 <body>
 
-<table class="table table-striped table-info table-hover" id="sortTable">
-    <thead class="thead-dark">
-    <tr class="bg-info">
-        <th scope="col">BANK</th>
-        <th scope="col" onclick="sortTable(0)">USD/BYN</th>
-        <th scope="col" onclick="sortTable(1)">EUR/BYN</th>
-        <th scope="col" onclick="sortTable(2)">BYN/PLN</th>
-        <th scope="col">UPDATE</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row"><a class="badge badge-danger" href="https://www.bsb.by/obmen-valyut">BSB</a></th>
-        <td>
-            <section id="print-BSB-USD"></section>
-        </td>
-        <td>
-            <section id="print-BSB-EUR"></section>
-        </td>
-        <td>
-            <section id="print-BSB-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingBSB" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+<div class="container-fluid" style="max-width: 24em">
+    <table class="table table-striped table-info table-hover" id="sortTable">
+        <thead class="thead-dark">
+        <tr class="bg-info">
+            <th scope="col">BANK</th>
+            <th scope="col" onclick="sortTable(0)">USD/BYN</th>
+            <th scope="col" onclick="sortTable(1)">EUR/BYN</th>
+            <th scope="col">UPDATE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row"><a class="badge badge-danger" href="https://www.bsb.by/obmen-valyut">BSB</a></th>
+            <td>
+                <section id="print-BSB-USD"></section>
+            </td>
+            <td>
+                <section id="print-BSB-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingBSB" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdateBSB" class="btn btn-info" type="button" onclick="requestPostBSB()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdateBSB" class="btn btn-info" type="button" onclick="requestPostBSB()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-    </tr>
-    <tr>
-        <th scope="row"><a class="badge badge-warning" href="https://bnb.by/kursy-valyut/imbank/">BNB</a></th>
-        <td>
-            <section id="print-BNB-USD"></section>
-        </td>
-        <td>
-            <section id="print-BNB-EUR"></section>
-        </td>
-        <td>
-            <section id="print-BNB-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingBNB" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+                    <span class="sr-only">Update</span>
+                </button>
+        </tr>
+        <tr>
+            <th scope="row"><a class="badge badge-warning" href="https://bnb.by/kursy-valyut/imbank/">BNB</a></th>
+            <td>
+                <section id="print-BNB-USD"></section>
+            </td>
+            <td>
+                <section id="print-BNB-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingBNB" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdateBNB" class="btn btn-info" type="button" onclick="requestPostBNB()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdateBNB" class="btn btn-info" type="button" onclick="requestPostBNB()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><a class="badge badge-dark" href="https://www.alfabank.by/exchange/digital/">Alfa</a></th>
-        <td>
-            <section id="print-Alfa-USD"></section>
-        </td>
-        <td>
-            <section id="print-Alfa-EUR"></section>
-        </td>
-        <td>
-            <section id="print-Alfa-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingAlfa" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+                    <span class="sr-only">Update</span>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><a class="badge badge-dark" href="https://www.alfabank.by/exchange/digital/">Alfa</a></th>
+            <td>
+                <section id="print-Alfa-USD"></section>
+            </td>
+            <td>
+                <section id="print-Alfa-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingAlfa" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdateAlfa" class="btn btn-info" type="button" onclick="requestPostAlfa()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdateAlfa" class="btn btn-info" type="button" onclick="requestPostAlfa()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-    </tr>
-    <tr>
-        <th scope="row"><a class="badge badge-light" href="https://www.paritetbank.by/private/rates/">Paritet</a></th>
-        <td>
-            <section id="print-Paritet-USD"></section>
-        </td>
-        <td>
-            <section id="print-Paritet-EUR"></section>
-        </td>
-        <td>
-            <section id="print-Paritet-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingParitet" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+                    <span class="sr-only">Update</span>
+                </button>
+        </tr>
+        <tr>
+            <th scope="row"><a class="badge badge-light" href="https://www.paritetbank.by/private/rates/">Paritet</a>
+            </th>
+            <td>
+                <section id="print-Paritet-USD"></section>
+            </td>
+            <td>
+                <section id="print-Paritet-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingParitet" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdateParitet" class="btn btn-info" type="button" onclick="requestPostParitet()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdateParitet" class="btn btn-info" type="button" onclick="requestPostParitet()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-    </tr>
-    <tr>
-        <th scope="row"><a class="badge badge-primary" href="https://belgazprombank.by/about/kursi_valjut/">BGPB</a></th>
-        <td>
-            <section id="print-BGPB-USD"></section>
-        </td>
-        <td>
-            <section id="print-BGPB-EUR"></section>
-        </td>
-        <td>
-            <section id="print-BGPB-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingBGPB" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+                    <span class="sr-only">Update</span>
+                </button>
+        </tr>
+        <tr>
+            <th scope="row"><a class="badge badge-primary" href="https://belgazprombank.by/about/kursi_valjut/">BGPB</a>
+            </th>
+            <td>
+                <section id="print-BGPB-USD"></section>
+            </td>
+            <td>
+                <section id="print-BGPB-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingBGPB" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdateBGPB" class="btn btn-info" type="button" onclick="requestPostBGPB()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdateBGPB" class="btn btn-info" type="button" onclick="requestPostBGPB()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-    </tr>
-    <tr>
-        <th scope="row"><a class="badge badge-secondary" href="https://www.mtbank.by/courses/cards/">MTB</a></th>
-        <td>
-            <section id="print-MTB-USD"></section>
-        </td>
-        <td>
-            <section id="print-MTB-EUR"></section>
-        </td>
-        <td>
-            <section id="print-MTB-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingMTB" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+                    <span class="sr-only">Update</span>
+                </button>
+        </tr>
+        <tr>
+            <th scope="row"><a class="badge badge-secondary" href="https://www.mtbank.by/courses/cards/">MTB</a></th>
+            <td>
+                <section id="print-MTB-USD"></section>
+            </td>
+            <td>
+                <section id="print-MTB-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingMTB" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdateMTB" class="btn btn-info" type="button" onclick="requestPostMTB()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdateMTB" class="btn btn-info" type="button" onclick="requestPostMTB()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-    </tr>
-    <tr>
-        <th scope="row"><a class="badge badge-success" href="https://www.mtbank.by/courses/cards/">PayOkay</a></th>
-        <td>
-            <section id="print-PayOkay-USD"></section>
-        </td>
-        <td>
-            <section id="print-PayOkay-EUR"></section>
-        </td>
-        <td>
-            <section id="print-PayOkay-PLN"></section>
-        </td>
-        <td>
-            <button id="btnLoadingPayOkay" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                <section class="spinner-xyz">
+                    <span class="sr-only">Update</span>
+                </button>
+        </tr>
+        <tr>
+            <th scope="row"><a class="badge badge-success" href="https://www.mtbank.by/courses/cards/">PayOkay</a></th>
+            <td>
+                <section id="print-PayOkay-USD"></section>
+            </td>
+            <td>
+                <section id="print-PayOkay-EUR"></section>
+            </td>
+            <td>
+                <button id="btnLoadingPayOkay" style="display: none;" class="btn btn-secondary" type="button" disabled>
+                    <section class="spinner-xyz">
+                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    </section>
+                    <span class="sr-only">Loading...</span>
+                </button>
+                <button id="btnUpdatePayOkay" class="btn btn-info" type="button" onclick="requestPostPayOkay()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                </section>
-                <span class="sr-only">Loading...</span>
-            </button>
-            <button id="btnUpdatePayOkay" class="btn btn-info" type="button" onclick="requestPostPayOkay()">
-                <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Update</span>
-            </button>
-    </tr>
-    </tbody>
-</table>
+                    <span class="sr-only">Update</span>
+                </button>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="container-fluid" style="max-width: 13em">
+        <div class="input-group  input-group-lg">
+            <div class="input-group-prepend" style="font-size: x-large">
+                <button style="font-size: x-large" id="btnUpdateBGPB2" class="btn btn-lg btn-primary" type="button"
+                        onclick="requestPostBGPB()">
+                    <span class="">BGPB   </span>
+                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Update BGPB</span>
+                </button>
+                <span style="font-size: x-large" class="input-group-text">BYN/PLN</span>
+            </div>
+            <input style="font-size: xx-large" id="BGPB-BYN-PLN" readonly type="text" class="form-control"
+                   placeholder="0.0"
+                   aria-label="BYN/PLN">
+        </div>
+    </div>
+    <br>
+
+    <table class="table table-striped table-secondary table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Trans->Card</th>
+            <th scope="col">
+                <button id="btnUpdateMC" class="btn btn-lg btn-danger" type="button" onclick="updateMC()">
+                    <span>MC   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Update MC</span>
+                </button>
+            </th>
+            <th scope="col">
+                <button id="btnUpdateVisa" class="btn btn-lg btn-primary" type="button" onclick="updateVisa()">
+                    <span>Visa   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Update Visa</span>
+                </button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">EUR->USD</th>
+            <td><span id="EUR-USD-MC"></span></td>
+            <td><span id="EUR-USD-VISA"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">USD->EUR</th>
+            <td><span id="USD-EUR-MC"></span></td>
+            <td><span id="USD-EUR-VISA"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">PLN->USD</th>
+            <td><span id="PLN-USD-MC"></span></td>
+            <td><span id="PLN-USD-VISA"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">PLN->EUR</th>
+            <td><span id="PLN-EUR-MC"></span></td>
+            <td><span id="PLN-EUR-VISA"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">PLN->BYN</th>
+            <td><span id="PLN-BYN-MC"></span></td>
+            <td><span id="PLN-BYN-VISA"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 
 <script>
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
+
+    function updateMC() {
+        const btnUpdate = document.getElementById("btnUpdateMC");
+        if (!isExist(btnUpdate)) {
+            return;
+        }
+
+        const elEURtoUSDbyMC = document.getElementById("EUR-USD-MC");
+        const elUSDtoEURbyMC = document.getElementById("USD-EUR-MC");
+        const elPLNtoUSDbyMC = document.getElementById("PLN-USD-MC");
+        const elPLNtoEURbyMC = document.getElementById("PLN-EUR-MC");
+        const elPLNtoBYNbyMC = document.getElementById("PLN-BYN-MC");
+
+        const urlMC = 'https://corsproxy.io/?https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
+
+        elEURtoUSDbyMC.innerText = null;
+        fetch(urlMC + new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'EUR',
+            crdhldBillCurr: 'USD',
+            bankFee: 0,
+            transAmt: 1
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elEURtoUSDbyMC.innerText = res.data['conversionRate'].toFixed(4);
+                })
+        }).catch(error => {
+            elEURtoUSDbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        elUSDtoEURbyMC.innerText = null;
+        fetch(urlMC + new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'USD',
+            crdhldBillCurr: 'EUR',
+            bankFee: 0,
+            transAmt: 1
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elUSDtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                })
+        }).catch(error => {
+            elUSDtoEURbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoUSDbyMC.innerText = null;
+        fetch(urlMC + new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'PLN',
+            crdhldBillCurr: 'USD',
+            bankFee: 0,
+            transAmt: 1
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elPLNtoUSDbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoUSDbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoEURbyMC.innerText = null;
+        fetch(urlMC + new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'PLN',
+            crdhldBillCurr: 'EUR',
+            bankFee: 0,
+            transAmt: 1
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elPLNtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoEURbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoBYNbyMC.innerText = null;
+        fetch(urlMC + new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'PLN',
+            crdhldBillCurr: 'BYN',
+            bankFee: 0,
+            transAmt: 1
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elPLNtoBYNbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                })
+        })
+            .catch(error => {
+                elPLNtoBYNbyMC.innerText = 'error';
+                console.error(error);
+            });
+    }
+
+    function updateVisa() {
+        const btnUpdate = document.getElementById("btnUpdateVisa");
+        if (!isExist(btnUpdate)) {
+            return;
+        }
+
+        const elEURtoUSDbyVISA = document.getElementById("EUR-USD-VISA");
+        const elUSDtoEURbyVISA = document.getElementById("USD-EUR-VISA");
+        const elPLNtoUSDbyVISA = document.getElementById("PLN-USD-VISA");
+        const elPLNtoEURbyVISA = document.getElementById("PLN-EUR-VISA");
+        const elPLNtoBYNbyVISA = document.getElementById("PLN-BYN-VISA");
+
+        const urlVISA = 'https://corsproxy.io/?https://www.visa.de/cmsapi/fx/rates?';
+
+        elEURtoUSDbyVISA.innerText = null;
+        fetch(urlVISA + new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'USD',
+            toCurr: 'EUR'
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elEURtoUSDbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
+                })
+        }).catch(error => {
+            elEURtoUSDbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        elUSDtoEURbyVISA.innerText = null;
+        fetch(urlVISA + new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'EUR',
+            toCurr: 'USD'
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elUSDtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                })
+        }).catch(error => {
+            elUSDtoEURbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoUSDbyVISA.innerText = null;
+        fetch(urlVISA + new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'USD',
+            toCurr: 'PLN'
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elPLNtoUSDbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoUSDbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoEURbyVISA.innerText = null;
+        fetch(urlVISA + new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'EUR',
+            toCurr: 'PLN'
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elPLNtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoEURbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        elPLNtoBYNbyVISA.innerText = null;
+        fetch(urlVISA + new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'BYN',
+            toCurr: 'PLN'
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elPLNtoBYNbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                })
+        }).catch(error => {
+            elPLNtoBYNbyVISA.innerText = 'error';
+            console.error(error);
+        });
+    }
+
 
     function requestPostBSB() {
         const btnUpdate = document.getElementById("btnUpdateBSB");
@@ -261,7 +636,7 @@
 
                         document.getElementById("print-BSB-USD").innerText = rateUSD;
                         document.getElementById("print-BSB-EUR").innerText = rateEUR;
-                        document.getElementById("print-BSB-PLN").innerText = ratePLN;
+                        // document.getElementById("print-BSB-PLN").innerText = ratePLN;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
@@ -310,7 +685,7 @@
 
                         document.getElementById("print-BNB-USD").innerText = rateUSD;
                         document.getElementById("print-BNB-EUR").innerText = rateEUR;
-                        document.getElementById("print-BNB-PLN").innerText = ratePLN;
+                        // document.getElementById("print-BNB-PLN").innerText = ratePLN;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
@@ -468,7 +843,7 @@
 
                         document.getElementById("print-BGPB-USD").innerText = rateUSD;
                         document.getElementById("print-BGPB-EUR").innerText = rateEUR;
-                        document.getElementById("print-BGPB-PLN").innerText = ratePLN;
+                        document.getElementById("BGPB-BYN-PLN").value = ratePLN;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
