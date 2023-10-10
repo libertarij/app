@@ -289,6 +289,12 @@
             <td><span id="PLN-BYN-VISA"></span></td>
             <td><span id="PLN-BYN-REV"></span></td>
         </tr>
+        <tr class="table-dark">
+            <th scope="row">USD->BYN</th>
+            <td><span id="USD-BYN-MC"></span></td>
+            <td><span id="USD-BYN-VISA"></span></td>
+            <td><span id="USD-BYN-REV"></span></td>
+        </tr>
         </tbody>
     </table>
 
@@ -309,6 +315,7 @@
         const elPLNtoUSDbyRev = document.getElementById("PLN-USD-REV");
         const elPLNtoEURbyRev = document.getElementById("PLN-EUR-REV");
         const elPLNtoBYNbyRev = document.getElementById("PLN-BYN-REV");
+        const elUSDtoBYNbyRev = document.getElementById("USD-BYN-REV");
 
         const urlRev = 'https://corsproxy.io/?https://www.revolut.com/api/exchange/quote?';
 
@@ -440,6 +447,32 @@
             elPLNtoBYNbyRev.innerText = 'error';
             console.error(error);
         });
+
+        elUSDtoBYNbyRev.innerText = null;
+        fetch(urlRev + new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'BYN',
+            toCurrency: 'USD',
+            amount: 1,
+            isRecipientAmount: false
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    console.log(res)
+                    elUSDtoBYNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                })
+        }).catch(error => {
+            elUSDtoBYNbyRev.innerText = 'error';
+            console.error(error);
+        });
     }
 
     function updateMC() {
@@ -453,6 +486,7 @@
         const elPLNtoUSDbyMC = document.getElementById("PLN-USD-MC");
         const elPLNtoEURbyMC = document.getElementById("PLN-EUR-MC");
         const elPLNtoBYNbyMC = document.getElementById("PLN-BYN-MC");
+        const elUSDtoBYNbyMC = document.getElementById("USD-BYN-MC");
 
         const urlMC = 'https://corsproxy.io/?https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
 
@@ -576,11 +610,35 @@
                 .then(res => {
                     elPLNtoBYNbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
                 })
-        })
-            .catch(error => {
-                elPLNtoBYNbyMC.innerText = 'error';
-                console.error(error);
-            });
+        }).catch(error => {
+            elPLNtoBYNbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        elUSDtoBYNbyMC.innerText = null;
+        fetch(urlMC + new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'USD',
+            crdhldBillCurr: 'BYN',
+            bankFee: 0,
+            transAmt: 1
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+                method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elUSDtoBYNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
+                })
+        }).catch(error => {
+            elUSDtoBYNbyMC.innerText = 'error';
+            console.error(error);
+        });
     }
 
     function updateVisa() {
@@ -594,6 +652,7 @@
         const elPLNtoUSDbyVISA = document.getElementById("PLN-USD-VISA");
         const elPLNtoEURbyVISA = document.getElementById("PLN-EUR-VISA");
         const elPLNtoBYNbyVISA = document.getElementById("PLN-BYN-VISA");
+        const elUSDtoBYNbyVISA = document.getElementById("USD-BYN-VISA");
 
         const urlVISA = 'https://corsproxy.io/?https://www.visa.de/cmsapi/fx/rates?';
 
@@ -766,8 +825,41 @@
             elPLNtoBYNbyVISA.innerText = 'error';
             console.error(error);
         });
-    }
 
+        elUSDtoBYNbyVISA.innerText = null;
+        fetch(urlVISA + new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'BYN',
+            toCurr: 'USD'
+        }), {
+                headers: {
+                    'User-Agent': userAgent,
+                    accept: 'application/json'
+                },
+                cors: 'no-cors',
+            method: 'GET',
+            }
+        ).then(response => {
+            response.json()
+                .then(res => {
+                    elUSDtoBYNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
+                })
+        }).catch(error => {
+            elUSDtoBYNbyVISA.innerText = 'error';
+            console.error(error);
+        });
+    }
 
     function requestPostBSB() {
         const btnUpdate = document.getElementById("btnUpdateBSB");
