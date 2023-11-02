@@ -306,6 +306,8 @@
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
 
+    const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest='
+
     function updateRev() {
         const btnUpdate = document.getElementById("btnUpdateRev");
         if (!isExist(btnUpdate)) {
@@ -319,7 +321,7 @@
         const elPLNtoBYNbyRev = document.getElementById("PLN-BYN-REV");
         const elUSDtoBYNbyRev = document.getElementById("USD-BYN-REV");
 
-        const urlRev = 'https://corsproxy.io/?https://www.revolut.com/api/exchange/quote?';
+        const urlRev = proxyUrl + 'https://www.revolut.com/api/exchange/quote?';
 
         elEURtoUSDbyRev.innerText = null;
         fetch(urlRev + new URLSearchParams({
@@ -490,7 +492,7 @@
         const elPLNtoBYNbyMC = document.getElementById("PLN-BYN-MC");
         const elUSDtoBYNbyMC = document.getElementById("USD-BYN-MC");
 
-        const urlMC = 'https://corsproxy.io/?https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
+        const urlMC = proxyUrl + 'https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
 
         elEURtoUSDbyMC.innerText = null;
         fetch(urlMC + new URLSearchParams({
@@ -656,7 +658,7 @@
         const elPLNtoBYNbyVISA = document.getElementById("PLN-BYN-VISA");
         const elUSDtoBYNbyVISA = document.getElementById("USD-BYN-VISA");
 
-        const urlVISA = 'https://corsproxy.io/?https://www.visa.de/cmsapi/fx/rates?';
+        const urlVISA = proxyUrl + 'https://www.visa.de/cmsapi/fx/rates?';
 
         elEURtoUSDbyVISA.innerText = null;
         fetch(urlVISA + new URLSearchParams({
@@ -927,7 +929,7 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlBNB = 'https://corsproxy.io/?https://bnb.by/kursy-valyut/imbank/';
+        let urlBNB = proxyUrl + 'https://bnb.by/kursy-valyut/imbank/';
         console.log('URL for POST:', urlBNB);
 
         fetch(urlBNB, {
@@ -976,7 +978,7 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
+        let urlAlfa = proxyUrl + 'https://www.alfabank.by/exchange/digital/';
         console.log('URL for POST:', urlAlfa);
 
         fetch(urlAlfa, {
@@ -1024,7 +1026,7 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlParitet = 'https://corsproxy.io/?https://www.paritetbank.by/private/rates/';
+        let urlParitet = proxyUrl + 'https://www.paritetbank.by/private/rates/';
         console.log('URL for POST:', urlParitet);
 
         fetch(urlParitet, {
@@ -1073,7 +1075,7 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlBGPB = 'https://corsproxy.io/?https://belgazprombank.by/about/kursi_valjut/';
+        let urlBGPB = proxyUrl + 'https://belgazprombank.by/about/kursi_valjut/';
         console.log('URL for POST:', urlBGPB);
 
         fetch(urlBGPB, {
@@ -1134,7 +1136,7 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlMTB = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
+        let urlMTB = proxyUrl + 'https://www.mtbank.by/currxml.php';
         console.log('URL for POST:', urlMTB);
 
         fetch(urlMTB, {
@@ -1192,7 +1194,7 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlPayOkay = 'https://corsproxy.io/?https://www.mtbank.by/currxml.php';
+        let urlPayOkay = proxyUrl + 'https://www.mtbank.by/currxml.php';
         console.log('URL for POST:', urlPayOkay);
 
         fetch(urlPayOkay, {
