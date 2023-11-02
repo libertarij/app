@@ -492,26 +492,16 @@
         const elUSDtoBYNbyMC = document.getElementById("USD-BYN-MC");
 
         const urlMC = 'https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
-        const reqUrl = proxyUrl +  encodeURIComponent(urlMC + new URLSearchParams({
+        const urlParamEURtoUSDbyMS = new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'EUR',
             crdhldBillCurr: 'USD',
             bankFee: 0,
             transAmt: 1
-        })
-        );
-
+        });
+        let reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamEURtoUSDbyMS);
         elEURtoUSDbyMC.innerText = null;
-        fetch(reqUrl
-            
-        // urlMC + new URLSearchParams({
-        //     fxDate: '0000-00-00',
-        //     transCurr: 'EUR',
-        //     crdhldBillCurr: 'USD',
-        //     bankFee: 0,
-        //     transAmt: 1
-        // })
-        , {
+        fetch(reqUrl, {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
@@ -529,14 +519,16 @@
             console.error(error);
         });
 
-        elUSDtoEURbyMC.innerText = null;
-        fetch(urlMC + new URLSearchParams({
+        const urlParamUSDtoEURbyMC = new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'USD',
             crdhldBillCurr: 'EUR',
             bankFee: 0,
             transAmt: 1
-        }), {
+        });
+        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamUSDtoEURbyMS);
+        elUSDtoEURbyMC.innerText = null;
+        fetch(reqUrl, {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
@@ -554,14 +546,16 @@
             console.error(error);
         });
 
-        elPLNtoUSDbyMC.innerText = null;
-        fetch(urlMC + new URLSearchParams({
+        const urlParamPLNtoUSDbyMC = new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'PLN',
             crdhldBillCurr: 'USD',
             bankFee: 0,
             transAmt: 1
-        }), {
+        });
+        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamPLNtoUSDbyMC);
+        elPLNtoUSDbyMC.innerText = null;
+        fetch(reqUrl, {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
@@ -579,14 +573,16 @@
             console.error(error);
         });
 
-        elPLNtoEURbyMC.innerText = null;
-        fetch(urlMC + new URLSearchParams({
+        const urlParamPLNtoEURbyMC = new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'PLN',
             crdhldBillCurr: 'EUR',
             bankFee: 0,
             transAmt: 1
-        }), {
+        });
+        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamPLNtoEURbyMC);
+        elPLNtoEURbyMC.innerText = null;
+        fetch(reqUrl, {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
@@ -604,14 +600,16 @@
             console.error(error);
         });
 
-        elPLNtoBYNbyMC.innerText = null;
-        fetch(urlMC + new URLSearchParams({
+        const urlParamPLNtoBYNbyMC = new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'PLN',
             crdhldBillCurr: 'BYN',
             bankFee: 0,
             transAmt: 1
-        }), {
+        });
+        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamPLNtoBYNbyMC);
+        elPLNtoBYNbyMC.innerText = null;
+        fetch(reqUrl, {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
@@ -629,14 +627,16 @@
             console.error(error);
         });
 
-        elUSDtoBYNbyMC.innerText = null;
-        fetch(urlMC + new URLSearchParams({
+        const urlParamUSDtoBYNbyMC = new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'USD',
             crdhldBillCurr: 'BYN',
             bankFee: 0,
             transAmt: 1
-        }), {
+        });
+        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamUSDtoBYNbyMC);
+        elUSDtoBYNbyMC.innerText = null;
+        fetch(reqUrl, {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
