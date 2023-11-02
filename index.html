@@ -305,7 +305,6 @@
 <script>
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
-
     const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest='
 
     function updateRev() {
@@ -492,16 +491,27 @@
         const elPLNtoBYNbyMC = document.getElementById("PLN-BYN-MC");
         const elUSDtoBYNbyMC = document.getElementById("USD-BYN-MC");
 
-        const urlMC = proxyUrl + 'https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
-
-        elEURtoUSDbyMC.innerText = null;
-        fetch(urlMC + new URLSearchParams({
+        const urlMC = 'https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
+        const reqUrl = proxyUrl +  encodeURIComponent(urlMC + new URLSearchParams({
             fxDate: '0000-00-00',
             transCurr: 'EUR',
             crdhldBillCurr: 'USD',
             bankFee: 0,
             transAmt: 1
-        }), {
+        })
+        );
+
+        elEURtoUSDbyMC.innerText = null;
+        fetch(reqUrl
+            
+        // urlMC + new URLSearchParams({
+        //     fxDate: '0000-00-00',
+        //     transCurr: 'EUR',
+        //     crdhldBillCurr: 'USD',
+        //     bankFee: 0,
+        //     transAmt: 1
+        // })
+        , {
                 headers: {
                     'User-Agent': userAgent,
                     accept: 'application/json'
