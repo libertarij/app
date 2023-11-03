@@ -307,6 +307,32 @@
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
     const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest='
 
+    function fetchWithProxy(url, params, cors){
+        let noCorsParams = new URLSearchParams({
+            cors: 'no-cors',
+            headers: {
+                'User-Agent': userAgent,
+		        accept: 'application/json',
+            },
+            method: 'GET',
+        });
+
+        if(cors == true && (params != null || params != '')){
+            console.log(`URL for POST: ${proxyUrl}${url}${encodeURIComponent(url + params)}${noCorsParams}`);
+            return fetch(proxyUrl + encodeURIComponent(url + params), noCorsParams);
+        }
+        if(cors == true && (params == null || params == '')){
+            console.log(`URL for POST: ${proxyUrl}${url}${noCorsParams}`);
+            return fetch(proxyUrl + url, noCorsParams);
+        }
+        if(cors != true && (params != null || params != '')){
+            console.log(`URL for POST: ${proxyUrl}${url}${params}`);
+            return fetch(proxyUrl + encodeURIComponent(url + params));
+        }
+            console.log(`URL for POST: ${proxyUrl}${url}`);
+            return fetch(proxyUrl + url);
+    }
+
     function updateRev() {
         const btnUpdate = document.getElementById("btnUpdateRev");
         if (!isExist(btnUpdate)) {
@@ -322,22 +348,17 @@
 
         const urlRev = proxyUrl + 'https://www.revolut.com/api/exchange/quote?';
 
-        elEURtoUSDbyRev.innerText = null;
-        fetch(urlRev + new URLSearchParams({
+        const urlParamEURtoUSDbyRev = new URLSearchParams({
             country: 'DE',
             fromCurrency: 'USD',
             toCurrency: 'EUR',
             amount: 1,
             isRecipientAmount: false
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+        });
+        elEURtoUSDbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamEURtoUSDbyRev, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elEURtoUSDbyRev.innerText = (1 / res.rate.rate).toFixed(4);
@@ -347,22 +368,17 @@
             console.error(error);
         });
 
-        elUSDtoEURbyRev.innerText = null;
-        fetch(urlRev + new URLSearchParams({
+        const urlParamUSDtoEURbyRev = new URLSearchParams({
             country: 'DE',
             fromCurrency: 'EUR',
             toCurrency: 'USD',
             amount: 1,
             isRecipientAmount: false
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+        });
+        elUSDtoEURbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamUSDtoEURbyRev, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     console.log(res)
@@ -373,22 +389,17 @@
             console.error(error);
         });
 
-        elPLNtoUSDbyRev.innerText = null;
-        fetch(urlRev + new URLSearchParams({
+        const urlParamPLNtoUSDbyRev = new URLSearchParams({
             country: 'DE',
             fromCurrency: 'USD',
             toCurrency: 'PLN',
             amount: 1,
             isRecipientAmount: false
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+        });
+        elPLNtoUSDbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamPLNtoUSDbyRev, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     console.log(res)
@@ -399,22 +410,17 @@
             console.error(error);
         });
 
-        elPLNtoEURbyRev.innerText = null;
-        fetch(urlRev + new URLSearchParams({
+        const urlParamPLNtoEURbyRev = new URLSearchParams({
             country: 'DE',
             fromCurrency: 'EUR',
             toCurrency: 'PLN',
             amount: 1,
             isRecipientAmount: false
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+        });
+        elPLNtoEURbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamPLNtoEURbyRev, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     console.log(res)
@@ -425,22 +431,17 @@
             console.error(error);
         });
 
-        elPLNtoBYNbyRev.innerText = null;
-        fetch(urlRev + new URLSearchParams({
+        const urlParamPLNtoBYNbyRev = new URLSearchParams({
             country: 'DE',
             fromCurrency: 'BYN',
             toCurrency: 'PLN',
             amount: 1,
             isRecipientAmount: false
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+        });
+        elPLNtoBYNbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamPLNtoBYNbyRev, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     console.log(res)
@@ -451,22 +452,17 @@
             console.error(error);
         });
 
-        elUSDtoBYNbyRev.innerText = null;
-        fetch(urlRev + new URLSearchParams({
+        const urlParamUSDtoBYNbyRev = new URLSearchParams({
             country: 'DE',
             fromCurrency: 'BYN',
             toCurrency: 'USD',
             amount: 1,
             isRecipientAmount: false
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+        });
+        elUSDtoBYNbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamUSDtoBYNbyRev, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     console.log(res)
@@ -499,17 +495,10 @@
             bankFee: 0,
             transAmt: 1
         });
-        let reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamEURtoUSDbyMS);
         elEURtoUSDbyMC.innerText = null;
-        fetch(reqUrl, {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+
+        fetchWithProxy(urlMC, urlParamEURtoUSDbyMS, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elEURtoUSDbyMC.innerText = res.data['conversionRate'].toFixed(4);
@@ -526,17 +515,10 @@
             bankFee: 0,
             transAmt: 1
         });
-        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamUSDtoEURbyMC);
         elUSDtoEURbyMC.innerText = null;
-        fetch(reqUrl, {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+
+        fetchWithProxy(urlMC, urlParamUSDtoEURbyMC, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elUSDtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
@@ -553,17 +535,10 @@
             bankFee: 0,
             transAmt: 1
         });
-        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamPLNtoUSDbyMC);
         elPLNtoUSDbyMC.innerText = null;
-        fetch(reqUrl, {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+
+        fetchWithProxy(urlMC, urlParamPLNtoUSDbyMC, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elPLNtoUSDbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
@@ -580,17 +555,10 @@
             bankFee: 0,
             transAmt: 1
         });
-        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamPLNtoEURbyMC);
         elPLNtoEURbyMC.innerText = null;
-        fetch(reqUrl, {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+
+        fetchWithProxy(urlMC, urlParamPLNtoEURbyMC, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elPLNtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
@@ -607,17 +575,10 @@
             bankFee: 0,
             transAmt: 1
         });
-        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamPLNtoBYNbyMC);
         elPLNtoBYNbyMC.innerText = null;
-        fetch(reqUrl, {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+
+        fetchWithProxy(urlMC, urlParamPLNtoBYNbyMC, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elPLNtoBYNbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
@@ -634,17 +595,10 @@
             bankFee: 0,
             transAmt: 1
         });
-        reqUrl = proxyUrl +  encodeURIComponent(urlMC + urlParamUSDtoBYNbyMC);
         elUSDtoBYNbyMC.innerText = null;
-        fetch(reqUrl, {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
+
+        fetchWithProxy(urlMC, urlParamUSDtoBYNbyMC, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elUSDtoBYNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
@@ -668,10 +622,8 @@
         const elPLNtoBYNbyVISA = document.getElementById("PLN-BYN-VISA");
         const elUSDtoBYNbyVISA = document.getElementById("USD-BYN-VISA");
 
-        const urlVISA = proxyUrl + 'https://www.visa.de/cmsapi/fx/rates?';
-
-        elEURtoUSDbyVISA.innerText = null;
-        fetch(urlVISA + new URLSearchParams({
+        const urlVISA = 'https://www.visa.de/cmsapi/fx/rates?';
+        const urlParamEURtoUSDbyVISA = new URLSearchParams({
             amount: 1,
             fee: 0,
             utcConvertedDate: new Date().toLocaleDateString('en-us', {
@@ -686,60 +638,21 @@
             }),
             fromCurr: 'USD',
             toCurr: 'EUR'
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
-            response.json()
-                .then(res => {
-                    elEURtoUSDbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
-                })
-        }).catch(error => {
-            elEURtoUSDbyVISA.innerText = 'error';
-            console.error(error);
         });
+        elEURtoUSDbyVISA.innerText = null;
 
-        elUSDtoEURbyVISA.innerText = null;
-        fetch(urlVISA + new URLSearchParams({
-            amount: 1,
-            fee: 0,
-            utcConvertedDate: new Date().toLocaleDateString('en-us', {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-            }),
-            exchangedate: new Date().toLocaleDateString('en-us', {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-            }),
-            fromCurr: 'EUR',
-            toCurr: 'USD'
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
-            response.json()
-                .then(res => {
-                    elUSDtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
-                })
-        }).catch(error => {
-            elUSDtoEURbyVISA.innerText = 'error';
-            console.error(error);
-        });
+        fetchWithProxy(urlVISA, urlParamEURtoUSDbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+                elUSDtoEURbyVISA.innerText = 'error';
+                console.error(error);
+            });
 
-        elPLNtoUSDbyVISA.innerText = null;
-        fetch(urlVISA + new URLSearchParams({
+        const urlParamPLNtoUSDbyVISA = new URLSearchParams({
             amount: 1,
             fee: 0,
             utcConvertedDate: new Date().toLocaleDateString('en-us', {
@@ -754,26 +667,21 @@
             }),
             fromCurr: 'USD',
             toCurr: 'PLN'
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoUSDbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
-                })
-        }).catch(error => {
-            elPLNtoUSDbyVISA.innerText = 'error';
-            console.error(error);
         });
+        elPLNtoUSDbyVISA.innerText = null;
 
-        elPLNtoEURbyVISA.innerText = null;
-        fetch(urlVISA + new URLSearchParams({
+        fetchWithProxy(urlVISA, urlParamPLNtoUSDbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoUSDbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+                elPLNtoUSDbyVISA.innerText = 'error';
+                console.error(error);
+            });
+
+        const urlParamPLNtoEURbyVISA = new URLSearchParams({
             amount: 1,
             fee: 0,
             utcConvertedDate: new Date().toLocaleDateString('en-us', {
@@ -788,26 +696,21 @@
             }),
             fromCurr: 'EUR',
             toCurr: 'PLN'
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
-                })
-        }).catch(error => {
-            elPLNtoEURbyVISA.innerText = 'error';
-            console.error(error);
         });
+        elPLNtoEURbyVISA.innerText = null;
 
-        elPLNtoBYNbyVISA.innerText = null;
-        fetch(urlVISA + new URLSearchParams({
+        fetchWithProxy(urlVISA, urlParamPLNtoEURbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+                elPLNtoEURbyVISA.innerText = 'error';
+                console.error(error);
+            });
+
+        const urlParamPLNtoBYNbyVISA = new URLSearchParams({
             amount: 1,
             fee: 0,
             utcConvertedDate: new Date().toLocaleDateString('en-us', {
@@ -822,26 +725,21 @@
             }),
             fromCurr: 'BYN',
             toCurr: 'PLN'
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-                method: 'GET',
-            }
-        ).then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoBYNbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
-                })
-        }).catch(error => {
-            elPLNtoBYNbyVISA.innerText = 'error';
-            console.error(error);
         });
+        elPLNtoBYNbyVISA.innerText = null;
 
-        elUSDtoBYNbyVISA.innerText = null;
-        fetch(urlVISA + new URLSearchParams({
+        fetchWithProxy(urlVISA, urlParamPLNtoBYNbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoBYNbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+                elPLNtoBYNbyVISA.innerText = 'error';
+                console.error(error);
+            });
+
+        const urlParamUSDtoBYNbyVISA = new URLSearchParams({
             amount: 1,
             fee: 0,
             utcConvertedDate: new Date().toLocaleDateString('en-us', {
@@ -856,15 +754,11 @@
             }),
             fromCurr: 'BYN',
             toCurr: 'USD'
-        }), {
-                headers: {
-                    'User-Agent': userAgent,
-                    accept: 'application/json'
-                },
-                cors: 'no-cors',
-            method: 'GET',
-            }
-        ).then(response => {
+        });
+
+        elUSDtoBYNbyVISA.innerText = null;
+        fetchWithProxy(urlVISA, urlParamUSDtoBYNbyVISA, true)
+        .then(response => {
             response.json()
                 .then(res => {
                     elUSDtoBYNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
@@ -939,15 +833,9 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlBNB = proxyUrl + 'https://bnb.by/kursy-valyut/imbank/';
-        console.log('URL for POST:', urlBNB);
+        let urlBNB = 'https://bnb.by/kursy-valyut/imbank/';
 
-        fetch(urlBNB, {
-            cors: 'no-cors',
-            headers: {
-                'User-Agent': userAgent
-            }
-        })
+        fetchWithProxy(urlBNB,'',true)
             .then(response => {
                 response.text()
                     .then(res => {
@@ -988,15 +876,9 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlAlfa = proxyUrl + 'https://www.alfabank.by/exchange/digital/';
-        console.log('URL for POST:', urlAlfa);
+        let urlAlfa = 'https://www.alfabank.by/exchange/digital/';
 
-        fetch(urlAlfa, {
-            cors: 'no-cors',
-            headers: {
-                'User-Agent': userAgent
-            }
-        })
+        fetchWithProxy(urlAlfa,'',true)
             .then(response => {
                 response.text()
                     .then(res => {
@@ -1036,16 +918,9 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlParitet = proxyUrl + 'https://www.paritetbank.by/private/rates/';
-        console.log('URL for POST:', urlParitet);
+        let urlParitet = 'https://www.paritetbank.by/private/rates/';
 
-        fetch(urlParitet, {
-            cors: 'no-cors',
-            headers: {
-                'User-Agent': userAgent
-            },
-            method: 'GET',
-        })
+        fetchWithProxy(urlParitet,'',true)
             .then(response => {
                 response.text()
                     .then(res => {
@@ -1085,16 +960,9 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlBGPB = proxyUrl + 'https://belgazprombank.by/about/kursi_valjut/';
-        console.log('URL for POST:', urlBGPB);
+        let urlBGPB = 'https://belgazprombank.by/about/kursi_valjut/';
 
-        fetch(urlBGPB, {
-            cors: 'no-cors',
-            headers: {
-                'User-Agent': userAgent
-            },
-            method: 'GET',
-        })
+        fetchWithProxy(urlBGPB,'',true)
             .then(response => {
                 response.text()
                     .then(res => {
@@ -1146,16 +1014,9 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlMTB = proxyUrl + 'https://www.mtbank.by/currxml.php';
-        console.log('URL for POST:', urlMTB);
+        let urlMTB = 'https://www.mtbank.by/currxml.php';
 
-        fetch(urlMTB, {
-            cors: 'no-cors',
-            headers: {
-                'User-Agent': userAgent
-            },
-            method: 'GET',
-        })
+        fetchWithProxy(urlMTB,'',true)
             .then(response => {
                 response.text()
                     .then(res => {
@@ -1204,16 +1065,9 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlPayOkay = proxyUrl + 'https://www.mtbank.by/currxml.php';
-        console.log('URL for POST:', urlPayOkay);
+        let urlPayOkay = 'https://www.mtbank.by/currxml.php';
 
-        fetch(urlPayOkay, {
-            cors: 'no-cors',
-            headers: {
-                'User-Agent': userAgent
-            },
-            method: 'GET',
-        })
+        fetchWithProxy(urlPayOkay,'',true)
             .then(response => {
                 response.text()
                     .then(res => {
