@@ -652,6 +652,35 @@
                 console.error(error);
             });
 
+        const urlParamUSDtoEURbyVISA = new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'EUR',
+            toCurr: 'USD'
+        });
+        elUSDtoEURbyVISA.innerText = null;
+
+        fetchWithProxy(urlVISA, urlParamEURtoUSDbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+                elUSDtoEURbyVISA.innerText = 'error';
+                console.error(error);
+            });
+
         const urlParamPLNtoUSDbyVISA = new URLSearchParams({
             amount: 1,
             fee: 0,
