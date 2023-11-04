@@ -640,7 +640,7 @@
             .then(response => {
                 response.json()
                     .then(res => {
-                        elEURtoUSDbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                        elEURtoUSDbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
                 elEURtoUSDbyVISA.innerText = 'error';
