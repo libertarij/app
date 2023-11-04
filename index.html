@@ -305,7 +305,7 @@
 <script>
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
-    const proxyUrl = 'https://worker-weathered-cloud-901c.riko-f28.workers.dev/?';
+    const proxyUrl = 'https://nocors.riko.ws/';
 
     function fetchWithProxy(url, params, cors){
         let noCorsParams = new URLSearchParams({
@@ -346,7 +346,7 @@
         const elPLNtoBYNbyRev = document.getElementById("PLN-BYN-REV");
         const elUSDtoBYNbyRev = document.getElementById("USD-BYN-REV");
 
-        const urlRev = proxyUrl + 'https://www.revolut.com/api/exchange/quote?';
+        const urlRev = 'https://www.revolut.com/api/exchange/quote?';
 
         const urlParamEURtoUSDbyRev = new URLSearchParams({
             country: 'DE',
