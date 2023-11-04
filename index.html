@@ -665,7 +665,7 @@
         });
         elUSDtoEURbyVISA.innerText = null;
 
-        fetchWithProxy(urlVISA, urlParamEURtoUSDbyVISA, true)
+        fetchWithProxy(urlVISA, urlParamUSDtoEURbyVISA, true)
             .then(response => {
                 response.json()
                     .then(res => {
