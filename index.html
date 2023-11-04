@@ -381,7 +381,6 @@
         .then(response => {
             response.json()
                 .then(res => {
-                    console.log(res)
                     elUSDtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
                 })
         }).catch(error => {
@@ -402,7 +401,6 @@
         .then(response => {
             response.json()
                 .then(res => {
-                    console.log(res)
                     elPLNtoUSDbyRev.innerText = (res.rate.rate).toFixed(4);
                 })
         }).catch(error => {
@@ -423,7 +421,6 @@
         .then(response => {
             response.json()
                 .then(res => {
-                    console.log(res)
                     elPLNtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
                 })
         }).catch(error => {
@@ -444,7 +441,6 @@
         .then(response => {
             response.json()
                 .then(res => {
-                    console.log(res)
                     elPLNtoBYNbyRev.innerText = (res.rate.rate).toFixed(4);
                 })
         }).catch(error => {
@@ -465,7 +461,6 @@
         .then(response => {
             response.json()
                 .then(res => {
-                    console.log(res)
                     elUSDtoBYNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
                 })
         }).catch(error => {
