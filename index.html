@@ -645,10 +645,10 @@
             .then(response => {
                 response.json()
                     .then(res => {
-                        elUSDtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
+                        elEURtoUSDbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
-                elUSDtoEURbyVISA.innerText = 'error';
+                elEURtoUSDbyVISA.innerText = 'error';
                 console.error(error);
             });
 
