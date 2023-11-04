@@ -900,9 +900,14 @@
         hideElement(btnUpdate);
         showElement(btnLoading);
 
-        let urlAlfa = 'https://www.alfabank.by/exchange/digital/';
-
-        fetchWithProxy(urlAlfa,'',true)
+        let urlAlfa = 'https://api.codetabs.com/v1/proxy?quest=https://www.alfabank.by/exchange/digital/';
+        console.log('URL for POST:', urlAlfa);
+        fetch(urlAlfa, {
+            cors: 'no-cors',
+            headers: {
+                'User-Agent': userAgent
+            }
+        })
             .then(response => {
                 response.text()
                     .then(res => {
