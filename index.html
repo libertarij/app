@@ -49,24 +49,40 @@
         <thead class="thead-dark">
         <tr class="bg-info">
             <th scope="col">BANK
-                <span style="font-size: 0.3em" class="badge badge-light bg-sm">MC|VISA</span>
+                <!--                <span style="font-size: 0.3em" class="badge badge-light bg-sm">MC|VISA</span>-->
             </th>
-            <th scope="col" onclick="sortTable(0)">USD/BYN</th>
-            <th scope="col" onclick="sortTable(1)">EUR/BYN</th>
-            <th scope="col">UPDATE</th>
+            <th scope="col" onclick="sortTable(0)">$→Br</th>
+            <th scope="col" onclick="sortTable(1)">Br→$</th>
+            <th scope="col" onclick="sortTable(2)">€→Br</th>
+            <th scope="col" onclick="sortTable(3)">Br→€</th>
+            <th scope="col" onclick="sortTable(4)">€→$</th>
+            <th scope="col" onclick="sortTable(5)">$→€</th>
+            <th scope="col">UPD</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <th scope="row">
                 <a class="badge badge-danger" href="https://www.bsb.by/obmen-valyut">BSB</a>
-                <span style="font-size: 0.3em" class="badge badge-light bg-sm">PLN|EUR</span>
+                <!--                <span style="font-size: 0.3em" class="badge badge-light bg-sm">PLN|EUR</span>-->
             </th>
             <td>
-                <section id="print-BSB-USD"></section>
+                <section id="print-BSB-USD-BUY"></section>
             </td>
             <td>
-                <section id="print-BSB-EUR"></section>
+                <section id="print-BSB-USD-SALE"></section>
+            </td>
+            <td>
+                <section id="print-BSB-EUR-BUY"></section>
+            </td>
+            <td>
+                <section id="print-BSB-EUR-SALE"></section>
+            </td>
+            <td>
+                <section id="print-BSB-EURUSD-BUY"></section>
+            </td>
+            <td>
+                <section id="print-BSB-EURUSD-SALE"></section>
             </td>
             <td>
                 <button id="btnLoadingBSB" style="display: none;" class="btn btn-secondary" type="button" disabled>
@@ -83,13 +99,25 @@
         <tr>
             <th scope="row">
                 <a class="badge badge-warning" href="https://bnb.by/kursy-valyut/imbank/">BNB</a>
-                <span style="font-size: 0.3em" class="badge badge-light bg-sm">CNY|USD</span>
+                <!--                <span style="font-size: 0.3em" class="badge badge-light bg-sm">CNY|USD</span>-->
             </th>
             <td>
-                <section id="print-BNB-USD"></section>
+                <section id="print-BNB-USD-BUY"></section>
             </td>
             <td>
-                <section id="print-BNB-EUR"></section>
+                <section id="print-BNB-USD-SALE"></section>
+            </td>
+            <td>
+                <section id="print-BNB-EUR-BUY"></section>
+            </td>
+            <td>
+                <section id="print-BNB-EUR-SALE"></section>
+            </td>
+            <td>
+                <section id="print-BNB-EURUSD-BUY"></section>
+            </td>
+            <td>
+                <section id="print-BNB-EURUSD-SALE"></section>
             </td>
             <td>
                 <button id="btnLoadingBNB" style="display: none;" class="btn btn-secondary" type="button" disabled>
@@ -107,13 +135,25 @@
         <tr>
             <th scope="row">
                 <a class="badge badge-dark" href="https://www.alfabank.by/exchange/digital/">Alfa</a>
-                <span style="font-size: 0.3em" class="badge badge-light bg-sm">CNY|USD</span>
+                <!--                <span style="font-size: 0.3em" class="badge badge-light bg-sm">CNY|USD</span>-->
             </th>
             <td>
-                <section id="print-Alfa-USD"></section>
+                <section id="print-ALFA-USD-BUY"></section>
             </td>
             <td>
-                <section id="print-Alfa-EUR"></section>
+                <section id="print-ALFA-USD-SALE"></section>
+            </td>
+            <td>
+                <section id="print-ALFA-EUR-BUY"></section>
+            </td>
+            <td>
+                <section id="print-ALFA-EUR-SALE"></section>
+            </td>
+            <td>
+                <section id="print-ALFA-EURUSD-BUY"></section>
+            </td>
+            <td>
+                <section id="print-ALFA-EURUSD-SALE"></section>
             </td>
             <td>
                 <button id="btnLoadingAlfa" style="display: none;" class="btn btn-secondary" type="button" disabled>
@@ -128,57 +168,27 @@
                 </button>
         </tr>
         <tr>
-            <th scope="row"><a class="badge badge-light" href="https://www.paritetbank.by/private/rates/">Paritet</a>
-            </th>
-            <td>
-                <section id="print-Paritet-USD"></section>
-            </td>
-            <td>
-                <section id="print-Paritet-EUR"></section>
-            </td>
-            <td>
-                <button id="btnLoadingParitet" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                    <section class="spinner-xyz">
-                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    </section>
-                    <span class="sr-only">Loading...</span>
-                </button>
-                <button id="btnUpdateParitet" class="btn btn-info" type="button" onclick="requestPostParitet()">
-                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    <span class="sr-only">Update</span>
-                </button>
-        </tr>
-        <tr>
-            <th scope="row"><a class="badge badge-primary" href="https://belgazprombank.by/about/kursi_valjut/">BGPB</a>
-            </th>
-            <td>
-                <section id="print-BGPB-USD"></section>
-            </td>
-            <td>
-                <section id="print-BGPB-EUR"></section>
-            </td>
-            <td>
-                <button id="btnLoadingBGPB" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                    <section class="spinner-xyz">
-                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    </section>
-                    <span class="sr-only">Loading...</span>
-                </button>
-                <button id="btnUpdateBGPB" class="btn btn-info" type="button" onclick="requestPostBGPB()">
-                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    <span class="sr-only">Update</span>
-                </button>
-        </tr>
-        <tr>
             <th scope="row">
-                <a class="badge badge-secondary" href="https://www.mtbank.by/courses/cards/">MTB</a>
-                <span style="font-size: 0.3em" class="badge badge-light bg-sm">USD|USD</span>
+                <a class="badge badge-light" href="https://www.mtbank.by/courses/cards/">MTB</a>
+                <!--                <span style="font-size: 0.3em" class="badge badge-light bg-sm">USD|USD</span>-->
             </th>
             <td>
-                <section id="print-MTB-USD"></section>
+                <section id="print-MTB-USD-BUY"></section>
             </td>
             <td>
-                <section id="print-MTB-EUR"></section>
+                <section id="print-MTB-USD-SALE"></section>
+            </td>
+            <td>
+                <section id="print-MTB-EUR-BUY"></section>
+            </td>
+            <td>
+                <section id="print-MTB-EUR-SALE"></section>
+            </td>
+            <td>
+                <section id="print-MTB-EURUSD-BUY"></section>
+            </td>
+            <td>
+                <section id="print-MTB-EURUSD-SALE"></section>
             </td>
             <td>
                 <button id="btnLoadingMTB" style="display: none;" class="btn btn-secondary" type="button" disabled>
@@ -188,29 +198,6 @@
                     <span class="sr-only">Loading...</span>
                 </button>
                 <button id="btnUpdateMTB" class="btn btn-info" type="button" onclick="requestPostMTB()">
-                    <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    <span class="sr-only">Update</span>
-                </button>
-        </tr>
-        <tr>
-            <th scope="row">
-                <a class="badge badge-success" href="https://www.mtbank.by/courses/cards/">PayOkay</a>
-                <span style="font-size: 0.3em" class="badge badge-light bg-sm">USD|USD</span>
-            </th>
-            <td>
-                <section id="print-PayOkay-USD"></section>
-            </td>
-            <td>
-                <section id="print-PayOkay-EUR"></section>
-            </td>
-            <td>
-                <button id="btnLoadingPayOkay" style="display: none;" class="btn btn-secondary" type="button" disabled>
-                    <section class="spinner-xyz">
-                        <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    </section>
-                    <span class="sr-only">Loading...</span>
-                </button>
-                <button id="btnUpdatePayOkay" class="btn btn-info" type="button" onclick="requestPostPayOkay()">
                     <span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
                     <span class="sr-only">Update</span>
                 </button>
@@ -239,7 +226,13 @@
     <table class="table table-striped table-secondary table-hover">
         <thead class="thead-dark">
         <tr>
-            <th scope="col">Trans->Card</th>
+            <th scope="col">EXCHANGE</th>
+            <th scope="col">
+                <button id="btnUpdateRev" class="btn btn-lg btn-light" type="button" onclick="updateRev()">
+                    <span>Revolut   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Update Revolut</span>
+                </button>
+            </th>
             <th scope="col">
                 <button id="btnUpdateMC" class="btn btn-lg btn-danger" type="button" onclick="updateMC()">
                     <span>MC   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
@@ -252,50 +245,56 @@
                     <span class="sr-only">Update Visa</span>
                 </button>
             </th>
-            <th scope="col">
-                <button id="btnUpdateRev" class="btn btn-lg btn-light" type="button" onclick="updateRev()">
-                    <span>Revolut   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
-                    <span class="sr-only">Update Revolut</span>
-                </button>
-            </th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="row">EUR->USD</th>
-            <td><span id="EUR-USD-MC"></span></td>
-            <td><span id="EUR-USD-VISA"></span></td>
-            <td><span id="EUR-USD-REV"></span></td>
-        </tr>
-        <tr>
-            <th scope="row">USD->EUR</th>
+            <th scope="row">EUR→USD</th>
+            <td><span id="USD-EUR-REV"></span></td>
             <td><span id="USD-EUR-MC"></span></td>
             <td><span id="USD-EUR-VISA"></span></td>
-            <td><span id="USD-EUR-REV"></span></td>
         </tr>
         <tr>
-            <th scope="row">PLN->USD</th>
+            <th scope="row">USD→EUR</th>
+            <td><span id="EUR-USD-REV"></span></td>
+            <td><span id="EUR-USD-MC"></span></td>
+            <td><span id="EUR-USD-VISA"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">USD→PLN</th>
+            <td><span id="PLN-USD-REV"></span></td>
             <td><span id="PLN-USD-MC"></span></td>
             <td><span id="PLN-USD-VISA"></span></td>
-            <td><span id="PLN-USD-REV"></span></td>
         </tr>
         <tr>
-            <th scope="row">PLN->EUR</th>
+            <th scope="row">PLN→USD</th>
+            <td><span id="USD-PLN-REV"></span></td>
+            <td><span id="USD-PLN-MC"></span></td>
+            <td><span id="USD-PLN-VISA"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">EUR→PLN</th>
+            <td><span id="PLN-EUR-REV"></span></td>
             <td><span id="PLN-EUR-MC"></span></td>
             <td><span id="PLN-EUR-VISA"></span></td>
-            <td><span id="PLN-EUR-REV"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">PLN→EUR</th>
+            <td><span id="EUR-PLN-REV"></span></td>
+            <td><span id="EUR-PLN-MC"></span></td>
+            <td><span id="EUR-PLN-VISA"></span></td>
         </tr>
         <tr class="table-dark">
-            <th scope="row">PLN->BYN</th>
+            <th scope="row">BYN→PLN</th>
+            <td><span id="PLN-BYN-REV"></span></td>
             <td><span id="PLN-BYN-MC"></span></td>
             <td><span id="PLN-BYN-VISA"></span></td>
-            <td><span id="PLN-BYN-REV"></span></td>
         </tr>
         <tr class="table-dark">
-            <th scope="row">USD->BYN</th>
+            <th scope="row">BYN→USD</th>
+            <td><span id="USD-BYN-REV"></span></td>
             <td><span id="USD-BYN-MC"></span></td>
             <td><span id="USD-BYN-VISA"></span></td>
-            <td><span id="USD-BYN-REV"></span></td>
         </tr>
         </tbody>
     </table>
@@ -307,30 +306,30 @@
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
     const proxyUrl = 'https://nocors.riko.ws/?';
 
-    function fetchWithProxy(url, params, cors){
+    function fetchWithProxy(url, params, cors) {
         let noCorsParams = new URLSearchParams({
             cors: 'no-cors',
             headers: {
                 'User-Agent': userAgent,
-		        accept: 'application/json',
+                accept: 'application/json',
             },
             method: 'GET',
         });
 
-        if(cors == true && (params != null || params != '')){
+        if (cors == true && (params != null || params != '')) {
             console.log(`URL for POST: ${proxyUrl}${url}${encodeURIComponent(url + params)}${noCorsParams}`);
             return fetch(proxyUrl + encodeURIComponent(url + params), noCorsParams);
         }
-        if(cors == true && (params == null || params == '')){
+        if (cors == true && (params == null || params == '')) {
             console.log(`URL for POST: ${proxyUrl}${url}${noCorsParams}`);
             return fetch(proxyUrl + url, noCorsParams);
         }
-        if(cors != true && (params != null || params != '')){
+        if (cors != true && (params != null || params != '')) {
             console.log(`URL for POST: ${proxyUrl}${url}${params}`);
             return fetch(proxyUrl + encodeURIComponent(url + params));
         }
-            console.log(`URL for POST: ${proxyUrl}${url}`);
-            return fetch(proxyUrl + url);
+        console.log(`URL for POST: ${proxyUrl}${url}`);
+        return fetch(proxyUrl + url);
     }
 
     function updateRev() {
@@ -342,7 +341,9 @@
         const elEURtoUSDbyRev = document.getElementById("EUR-USD-REV");
         const elUSDtoEURbyRev = document.getElementById("USD-EUR-REV");
         const elPLNtoUSDbyRev = document.getElementById("PLN-USD-REV");
+        const elUSDtoPLNbyRev = document.getElementById("USD-PLN-REV");
         const elPLNtoEURbyRev = document.getElementById("PLN-EUR-REV");
+        const elEURtoPLNbyRev = document.getElementById("EUR-PLN-REV");
         const elPLNtoBYNbyRev = document.getElementById("PLN-BYN-REV");
         const elUSDtoBYNbyRev = document.getElementById("USD-BYN-REV");
 
@@ -358,12 +359,12 @@
         elEURtoUSDbyRev.innerText = null;
 
         fetchWithProxy(urlRev, urlParamEURtoUSDbyRev, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elEURtoUSDbyRev.innerText = (1 / res.rate.rate).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoUSDbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
             elEURtoUSDbyRev.innerText = 'error';
             console.error(error);
         });
@@ -378,12 +379,12 @@
         elUSDtoEURbyRev.innerText = null;
 
         fetchWithProxy(urlRev, urlParamUSDtoEURbyRev, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elUSDtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
             elUSDtoEURbyRev.innerText = 'error';
             console.error(error);
         });
@@ -398,13 +399,33 @@
         elPLNtoUSDbyRev.innerText = null;
 
         fetchWithProxy(urlRev, urlParamPLNtoUSDbyRev, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoUSDbyRev.innerText = (res.rate.rate).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoUSDbyRev.innerText = (res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
             elPLNtoUSDbyRev.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamUSDtoPLNbyRev = new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'PLN',
+            toCurrency: 'USD',
+            amount: 1,
+            isRecipientAmount: false
+        });
+        elUSDtoPLNbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamUSDtoPLNbyRev, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoPLNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
+            elUSDtoPLNbyRev.innerText = 'error';
             console.error(error);
         });
 
@@ -418,13 +439,33 @@
         elPLNtoEURbyRev.innerText = null;
 
         fetchWithProxy(urlRev, urlParamPLNtoEURbyRev, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoEURbyRev.innerText = (res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
             elPLNtoEURbyRev.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamEURtoPLNbyRev = new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'PLN',
+            toCurrency: 'EUR',
+            amount: 1,
+            isRecipientAmount: false
+        });
+        elEURtoPLNbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamEURtoPLNbyRev, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoPLNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
+            elEURtoPLNbyRev.innerText = 'error';
             console.error(error);
         });
 
@@ -438,12 +479,12 @@
         elPLNtoBYNbyRev.innerText = null;
 
         fetchWithProxy(urlRev, urlParamPLNtoBYNbyRev, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoBYNbyRev.innerText = (res.rate.rate).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoBYNbyRev.innerText = (res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
             elPLNtoBYNbyRev.innerText = 'error';
             console.error(error);
         });
@@ -458,12 +499,12 @@
         elUSDtoBYNbyRev.innerText = null;
 
         fetchWithProxy(urlRev, urlParamUSDtoBYNbyRev, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elUSDtoBYNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoBYNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
             elUSDtoBYNbyRev.innerText = 'error';
             console.error(error);
         });
@@ -493,12 +534,12 @@
         elEURtoUSDbyMC.innerText = null;
 
         fetchWithProxy(urlMC, urlParamEURtoUSDbyMS, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elEURtoUSDbyMC.innerText = res.data['conversionRate'].toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoUSDbyMC.innerText = res.data['conversionRate'].toFixed(4);
+                    })
+            }).catch(error => {
             elEURtoUSDbyMC.innerText = 'error';
             console.error(error);
         });
@@ -513,12 +554,12 @@
         elUSDtoEURbyMC.innerText = null;
 
         fetchWithProxy(urlMC, urlParamUSDtoEURbyMC, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elUSDtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
             elUSDtoEURbyMC.innerText = 'error';
             console.error(error);
         });
@@ -533,12 +574,12 @@
         elPLNtoUSDbyMC.innerText = null;
 
         fetchWithProxy(urlMC, urlParamPLNtoUSDbyMC, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoUSDbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoUSDbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
             elPLNtoUSDbyMC.innerText = 'error';
             console.error(error);
         });
@@ -553,12 +594,12 @@
         elPLNtoEURbyMC.innerText = null;
 
         fetchWithProxy(urlMC, urlParamPLNtoEURbyMC, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoEURbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
             elPLNtoEURbyMC.innerText = 'error';
             console.error(error);
         });
@@ -573,12 +614,12 @@
         elPLNtoBYNbyMC.innerText = null;
 
         fetchWithProxy(urlMC, urlParamPLNtoBYNbyMC, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elPLNtoBYNbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elPLNtoBYNbyMC.innerText = (1 / res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
             elPLNtoBYNbyMC.innerText = 'error';
             console.error(error);
         });
@@ -593,12 +634,12 @@
         elUSDtoBYNbyMC.innerText = null;
 
         fetchWithProxy(urlMC, urlParamUSDtoBYNbyMC, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elUSDtoBYNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoBYNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
             elUSDtoBYNbyMC.innerText = 'error';
             console.error(error);
         });
@@ -643,9 +684,9 @@
                         elEURtoUSDbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
-                elEURtoUSDbyVISA.innerText = 'error';
-                console.error(error);
-            });
+            elEURtoUSDbyVISA.innerText = 'error';
+            console.error(error);
+        });
 
         const urlParamUSDtoEURbyVISA = new URLSearchParams({
             amount: 1,
@@ -672,9 +713,9 @@
                         elUSDtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
-                elUSDtoEURbyVISA.innerText = 'error';
-                console.error(error);
-            });
+            elUSDtoEURbyVISA.innerText = 'error';
+            console.error(error);
+        });
 
         const urlParamPLNtoUSDbyVISA = new URLSearchParams({
             amount: 1,
@@ -701,9 +742,9 @@
                         elPLNtoUSDbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
-                elPLNtoUSDbyVISA.innerText = 'error';
-                console.error(error);
-            });
+            elPLNtoUSDbyVISA.innerText = 'error';
+            console.error(error);
+        });
 
         const urlParamPLNtoEURbyVISA = new URLSearchParams({
             amount: 1,
@@ -730,9 +771,9 @@
                         elPLNtoEURbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
-                elPLNtoEURbyVISA.innerText = 'error';
-                console.error(error);
-            });
+            elPLNtoEURbyVISA.innerText = 'error';
+            console.error(error);
+        });
 
         const urlParamPLNtoBYNbyVISA = new URLSearchParams({
             amount: 1,
@@ -759,9 +800,9 @@
                         elPLNtoBYNbyVISA.innerText = (1 / res['originalValues']['fxRateVisa']).toFixed(4);
                     })
             }).catch(error => {
-                elPLNtoBYNbyVISA.innerText = 'error';
-                console.error(error);
-            });
+            elPLNtoBYNbyVISA.innerText = 'error';
+            console.error(error);
+        });
 
         const urlParamUSDtoBYNbyVISA = new URLSearchParams({
             amount: 1,
@@ -782,12 +823,12 @@
 
         elUSDtoBYNbyVISA.innerText = null;
         fetchWithProxy(urlVISA, urlParamUSDtoBYNbyVISA, true)
-        .then(response => {
-            response.json()
-                .then(res => {
-                    elUSDtoBYNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
-                })
-        }).catch(error => {
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoBYNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
             elUSDtoBYNbyVISA.innerText = 'error';
             console.error(error);
         });
@@ -824,13 +865,19 @@
                     .then(res => {
                         let rates = res['rates'];
 
-                        let rateUSD = rates[0].sellAmount.toFixed(4);
-                        let rateEUR = rates[1].sellAmount.toFixed(4);
-                        let ratePLN = (1 / rates[6].sellAmount).toFixed(4);
+                        let rateUsdBuy = rates[0].buyAmount.toFixed(4);
+                        let rateUsdSale = rates[0].sellAmount.toFixed(4);
+                        let rateEurBuy = rates[1].buyAmount.toFixed(4);
+                        let rateEurSale = rates[1].sellAmount.toFixed(4);
+                        let rateEurUsdBuy = rates[4].buyAmount.toFixed(4);
+                        let rateEurUsdSale = rates[4].sellAmount.toFixed(4);
 
-                        document.getElementById("print-BSB-USD").innerText = rateUSD;
-                        document.getElementById("print-BSB-EUR").innerText = rateEUR;
-                        // document.getElementById("print-BSB-PLN").innerText = ratePLN;
+                        document.getElementById("print-BSB-USD-BUY").innerText = rateUsdBuy;
+                        document.getElementById("print-BSB-USD-SALE").innerText = rateUsdSale;
+                        document.getElementById("print-BSB-EUR-BUY").innerText = rateEurBuy;
+                        document.getElementById("print-BSB-EUR-SALE").innerText = rateEurSale;
+                        document.getElementById("print-BSB-EURUSD-BUY").innerText = rateEurUsdBuy;
+                        document.getElementById("print-BSB-EURUSD-SALE").innerText = rateEurUsdSale;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
@@ -859,7 +906,7 @@
 
         let urlBNB = 'https://bnb.by/kursy-valyut/imbank/';
 
-        fetchWithProxy(urlBNB,'',true)
+        fetchWithProxy(urlBNB, '', true)
             .then(response => {
                 response.text()
                     .then(res => {
@@ -867,13 +914,19 @@
                         const doc = parser.parseFromString(res, "text/html");
                         let rates = JSON.parse(doc.querySelector('input.jsConfig').value);
 
-                        let rateUSD = rates['USD']['BYN']['SALE'].toFixed(4);
-                        let rateEUR = rates['EUR']['BYN']['SALE'].toFixed(4);
-                        let ratePLN = (1 / rates['PLN']['BYN']['SALE']).toFixed(4);
+                        let rateUsdBuy = rates['USD']['BYN']['BUY'].toFixed(4);
+                        let rateUsdSale = rates['USD']['BYN']['SALE'].toFixed(4);
+                        let rateEurBuy = rates['EUR']['BYN']['BUY'].toFixed(4);
+                        let rateEurSale = rates['EUR']['BYN']['SALE'].toFixed(4);
+                        let rateEurUsdBuy = rates['EUR']['USD']['BUY'].toFixed(4);
+                        let rateEurUsdSale = rates['EUR']['USD']['SALE'].toFixed(4);
 
-                        document.getElementById("print-BNB-USD").innerText = rateUSD;
-                        document.getElementById("print-BNB-EUR").innerText = rateEUR;
-                        // document.getElementById("print-BNB-PLN").innerText = ratePLN;
+                        document.getElementById("print-BNB-USD-BUY").innerText = rateUsdBuy;
+                        document.getElementById("print-BNB-USD-SALE").innerText = rateUsdSale;
+                        document.getElementById("print-BNB-EUR-BUY").innerText = rateEurBuy;
+                        document.getElementById("print-BNB-EUR-SALE").innerText = rateEurSale;
+                        document.getElementById("print-BNB-EURUSD-BUY").innerText = rateEurUsdBuy;
+                        document.getElementById("print-BNB-EURUSD-SALE").innerText = rateEurUsdSale;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
@@ -916,53 +969,19 @@
                         let obj = doc.querySelector('div.section-content div[data-component]');
                         let rates = JSON.parse(obj.getAttribute('data-initial'));
 
-                        let rateUSD = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['0']['sell']['value']).toFixed(4);
-                        let rateEUR = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['1']['sell']['value']).toFixed(4);
+                        let rateUSDBuy = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['0']['purchase']['value']).toFixed(4);
+                        let rateUSDSale = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['0']['sell']['value']).toFixed(4);
+                        let rateEURBuy = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['1']['purchase']['value']).toFixed(4);
+                        let rateEURSale = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['exchangeRate']['1']['sell']['value']).toFixed(4);
+                        let rateEURUSDBuy = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['conversionRate']['0']['purchase']['value']).toFixed(4);
+                        let rateEURUSDSale = Number.parseFloat(rates['initialItems']['0']['currenciesData']['0']['value']['conversionRate']['0']['sell']['value']).toFixed(4);
 
-                        document.getElementById("print-Alfa-USD").innerText = rateUSD;
-                        document.getElementById("print-Alfa-EUR").innerText = rateEUR;
-
-                        setBlueColor(btnUpdate);
-                        showElement(btnUpdate);
-                        hideElement(btnLoading);
-
-                        sortTable();
-                    })
-            })
-            .catch(error => {
-                setRedColor(btnUpdate);
-                showElement(btnUpdate);
-                hideElement(btnLoading);
-                console.error(error);
-            });
-    }
-
-    function requestPostParitet() {
-        const btnUpdate = document.getElementById("btnUpdateParitet");
-        const btnLoading = document.getElementById("btnLoadingParitet");
-        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
-            return;
-        }
-
-        hideElement(btnUpdate);
-        showElement(btnLoading);
-
-        let urlParitet = 'https://www.paritetbank.by/private/rates/';
-
-        fetchWithProxy(urlParitet,'',true)
-            .then(response => {
-                response.text()
-                    .then(res => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(res, "text/html");
-                        let conversion = Array.from(doc.scripts).find(s => s.innerText.includes("var conversion")).innerText;
-
-                        let rates = JSON.parse(conversion.substring(conversion.indexOf("{"), conversion.lastIndexOf("}") + 1));
-                        let rateUSD = rates['4']['USDBYN']['BUY'].toFixed(4);
-                        let rateEUR = rates['4']['EURBYN']['BUY'].toFixed(4);
-
-                        document.getElementById("print-Paritet-USD").innerText = rateUSD;
-                        document.getElementById("print-Paritet-EUR").innerText = rateEUR;
+                        document.getElementById("print-ALFA-USD-BUY").innerText = rateUSDBuy;
+                        document.getElementById("print-ALFA-USD-SALE").innerText = rateUSDSale;
+                        document.getElementById("print-ALFA-EUR-BUY").innerText = rateEURBuy;
+                        document.getElementById("print-ALFA-EUR-SALE").innerText = rateEURSale;
+                        document.getElementById("print-ALFA-EURUSD-BUY").innerText = rateEURUSDBuy;
+                        document.getElementById("print-ALFA-EURUSD-SALE").innerText = rateEURUSDSale;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
@@ -980,55 +999,25 @@
     }
 
     function requestPostBGPB() {
-        const btnUpdate = document.getElementById("btnUpdateBGPB");
-        const btnLoading = document.getElementById("btnLoadingBGPB");
-        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
-            return;
-        }
-
-        hideElement(btnUpdate);
-        showElement(btnLoading);
 
         let urlBGPB = 'https://belgazprombank.by/about/kursi_valjut/';
 
-        fetchWithProxy(urlBGPB,'',true)
+        fetchWithProxy(urlBGPB, '', true)
             .then(response => {
                 response.text()
                     .then(res => {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(res, "text/html");
 
-                        let conversionUSD = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartUSD")).innerText;
-                        let conversionEUR = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartEUR")).innerText;
                         let conversionPLN = Array.from(doc.scripts).find(s => s.innerText.includes("currencyChartPLN")).innerText;
-
-                        let objUSD = conversionUSD.substring(conversionUSD.indexOf("[["), conversionUSD.lastIndexOf("]]") + 2);
-                        let objEUR = conversionEUR.substring(conversionEUR.indexOf("[["), conversionEUR.lastIndexOf("]]") + 2);
                         let objPLN = conversionPLN.substring(conversionPLN.indexOf("[["), conversionPLN.lastIndexOf("]]") + 2);
-
-                        let jsUSD = JSON.parse(objUSD);
-                        let jsEUR = JSON.parse(objEUR);
                         let jsPLN = JSON.parse(objPLN);
-
-                        let rateUSD = (jsUSD[1][jsUSD['1']['length'] - 1]).toFixed(4);
-                        let rateEUR = (jsEUR[1][jsEUR['1']['length'] - 1]).toFixed(4);
                         let ratePLN = (10 / jsPLN[1][jsPLN['1']['length'] - 1]).toFixed(4);
 
-                        document.getElementById("print-BGPB-USD").innerText = rateUSD;
-                        document.getElementById("print-BGPB-EUR").innerText = rateEUR;
                         document.getElementById("BGPB-BYN-PLN").value = ratePLN;
-
-                        setBlueColor(btnUpdate);
-                        showElement(btnUpdate);
-                        hideElement(btnLoading);
-
-                        sortTable();
                     })
             })
             .catch(error => {
-                setRedColor(btnUpdate);
-                showElement(btnUpdate);
-                hideElement(btnLoading);
                 console.error(error);
             });
     }
@@ -1045,80 +1034,43 @@
 
         let urlMTB = 'https://www.mtbank.by/currxml.php';
 
-        fetchWithProxy(urlMTB,'',true)
+        fetchWithProxy(urlMTB, '', true)
             .then(response => {
                 response.text()
                     .then(res => {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(res, "application/xml");
 
-                        let rateUSD;
-                        let rateEUR;
+                        let rateUSDBuy;
+                        let rateUSDSale;
+                        let rateEURBuy;
+                        let rateEURSale;
+                        let rateEURUSDBuy;
+                        let rateEURUSDSale;
 
                         let currencies = doc.querySelectorAll('cards currency');
 
                         currencies.forEach(currency => {
                             if (currency.querySelector('code').textContent === "USD" && currency.querySelector('codeTo').textContent === "BYN") {
-                                rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                                rateUSDBuy = Number.parseFloat(currency.querySelector('purchase').textContent).toFixed(4);
+                                rateUSDSale = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
                             }
                             if (currency.querySelector('code').textContent === "EUR" && currency.querySelector('codeTo').textContent === "BYN") {
-                                rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                                rateEURBuy = Number.parseFloat(currency.querySelector('purchase').textContent).toFixed(4);
+                                rateEURSale = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
+                            }
+                            if (currency.querySelector('code').textContent === "EUR" && currency.querySelector('codeTo').textContent === "USD") {
+                                rateEURUSDBuy = Number.parseFloat(currency.querySelector('purchase').textContent).toFixed(4);
+                                rateEURUSDSale = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
                             }
                         });
 
-                        document.getElementById("print-MTB-USD").innerText = rateUSD;
-                        document.getElementById("print-MTB-EUR").innerText = rateEUR;
-
-                        setBlueColor(btnUpdate);
-                        showElement(btnUpdate);
-                        hideElement(btnLoading);
-
-                        sortTable();
-                    })
-            })
-            .catch(error => {
-                setRedColor(btnUpdate);
-                showElement(btnUpdate);
-                hideElement(btnLoading);
-                console.error(error);
-            });
-    }
-
-    function requestPostPayOkay() {
-        const btnUpdate = document.getElementById("btnUpdatePayOkay");
-        const btnLoading = document.getElementById("btnLoadingPayOkay");
-        if (!isExist(btnUpdate) && !isExist(btnLoading)) {
-            return;
-        }
-
-        hideElement(btnUpdate);
-        showElement(btnLoading);
-
-        let urlPayOkay = 'https://www.mtbank.by/currxml.php';
-
-        fetchWithProxy(urlPayOkay,'',true)
-            .then(response => {
-                response.text()
-                    .then(res => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(res, "application/xml");
-
-                        let rateUSD;
-                        let rateEUR;
-
-                        let currencies = doc.querySelectorAll('payokay currency');
-
-                        currencies.forEach(currency => {
-                            if (currency.querySelector('code').textContent === "USD" && currency.querySelector('codeTo').textContent === "BYN") {
-                                rateUSD = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
-                            }
-                            if (currency.querySelector('code').textContent === "EUR" && currency.querySelector('codeTo').textContent === "BYN") {
-                                rateEUR = Number.parseFloat(currency.querySelector('sale').textContent).toFixed(4);
-                            }
-                        });
-
-                        document.getElementById("print-PayOkay-USD").innerText = rateUSD;
-                        document.getElementById("print-PayOkay-EUR").innerText = rateEUR;
+                        document.getElementById("print-MTB-USD-BUY").innerText = rateUSDBuy;
+                        document.getElementById("print-MTB-USD-SALE").innerText = rateUSDSale;
+                        document.getElementById("print-MTB-EUR-BUY").innerText = rateEURBuy;
+                        document.getElementById("print-MTB-EUR-SALE").innerText = rateEURSale;
+                        document.getElementById("print-MTB-EURUSD-BUY").innerText = rateEURUSDBuy;
+                        document.getElementById("print-MTB-EURUSD-SALE").innerText = rateEURUSDSale;
 
                         setBlueColor(btnUpdate);
                         showElement(btnUpdate);
@@ -1139,10 +1091,9 @@
         requestPostBSB();
         requestPostBNB();
         requestPostAlfa();
-        requestPostParitet();
         requestPostBGPB();
         requestPostMTB();
-        requestPostPayOkay();
+        updateRev();
     }
 
     let colNum;
@@ -1156,7 +1107,7 @@
         desc = true;
         if (n === undefined || n === null) {
             if (!isExist(colNum)) {
-                colNum = 0;
+                colNum = 1;
             }
             desc = false;
         } else {
