@@ -296,6 +296,12 @@
             <td><span id="USD-BYN-MC"></span></td>
             <td><span id="USD-BYN-VISA"></span></td>
         </tr>
+        <tr class="table-dark">
+            <th scope="row">BYN→EUR</th>
+            <td><span id="EUR-BYN-REV"></span></td>
+            <td><span id="EUR-BYN-MC"></span></td>
+            <td><span id="EUR-BYN-VISA"></span></td>
+        </tr>
         </tbody>
     </table>
 
@@ -346,6 +352,7 @@
         const elEURtoPLNbyRev = document.getElementById("EUR-PLN-REV");
         const elPLNtoBYNbyRev = document.getElementById("PLN-BYN-REV");
         const elUSDtoBYNbyRev = document.getElementById("USD-BYN-REV");
+        const elEURtoBYNbyRev = document.getElementById("EUR-BYN-REV");
 
         const urlRev = 'https://www.revolut.com/api/exchange/quote?';
 
@@ -508,6 +515,26 @@
             elUSDtoBYNbyRev.innerText = 'error';
             console.error(error);
         });
+
+        const urlParamEURtoBYNbyRev = new URLSearchParams({
+            country: 'DE',
+            fromCurrency: 'BYN',
+            toCurrency: 'EUR',
+            amount: 1,
+            isRecipientAmount: false
+        });
+        elEURtoBYNbyRev.innerText = null;
+
+        fetchWithProxy(urlRev, urlParamEURtoBYNbyRev, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoBYNbyRev.innerText = (1 / res.rate.rate).toFixed(4);
+                    })
+            }).catch(error => {
+            elEURtoBYNbyRev.innerText = 'error';
+            console.error(error);
+        });
     }
 
     function updateMC() {
@@ -522,6 +549,9 @@
         const elPLNtoEURbyMC = document.getElementById("PLN-EUR-MC");
         const elPLNtoBYNbyMC = document.getElementById("PLN-BYN-MC");
         const elUSDtoBYNbyMC = document.getElementById("USD-BYN-MC");
+        const elEURtoBYNbyMC = document.getElementById("EUR-BYN-MC");
+        const elUSDtoPLNbyMC = document.getElementById("USD-PLN-MC");
+        const elEURtoPLNbyMC = document.getElementById("EUR-PLN-MC");
 
         const urlMC = 'https://www.mastercard.com/settlement/currencyrate/conversion-rate?';
         const urlParamEURtoUSDbyMS = new URLSearchParams({
@@ -643,6 +673,66 @@
             elUSDtoBYNbyMC.innerText = 'error';
             console.error(error);
         });
+
+        const urlParamEURtoBYNbyMC = new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'EUR',
+            crdhldBillCurr: 'BYN',
+            bankFee: 0,
+            transAmt: 1
+        });
+        elEURtoBYNbyMC.innerText = null;
+
+        fetchWithProxy(urlMC, urlParamEURtoBYNbyMC, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoBYNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
+            elEURtoBYNbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamEURtoPLNbyMC = new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'EUR',
+            crdhldBillCurr: 'PLN',
+            bankFee: 0,
+            transAmt: 1
+        });
+        elEURtoPLNbyMC.innerText = null;
+
+        fetchWithProxy(urlMC, urlParamEURtoPLNbyMC, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoPLNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
+            elEURtoPLNbyMC.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamUSDtoPLNbyMC = new URLSearchParams({
+            fxDate: '0000-00-00',
+            transCurr: 'USD',
+            crdhldBillCurr: 'PLN',
+            bankFee: 0,
+            transAmt: 1
+        });
+        elUSDtoPLNbyMC.innerText = null;
+
+        fetchWithProxy(urlMC, urlParamUSDtoPLNbyMC, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoPLNbyMC.innerText = (res.data['conversionRate']).toFixed(4);
+                    })
+            }).catch(error => {
+            elUSDtoPLNbyMC.innerText = 'error';
+            console.error(error);
+        });
     }
 
     function updateVisa() {
@@ -654,9 +744,12 @@
         const elEURtoUSDbyVISA = document.getElementById("EUR-USD-VISA");
         const elUSDtoEURbyVISA = document.getElementById("USD-EUR-VISA");
         const elPLNtoUSDbyVISA = document.getElementById("PLN-USD-VISA");
+        const elUSDtoPLNbyVISA = document.getElementById("USD-PLN-VISA");
         const elPLNtoEURbyVISA = document.getElementById("PLN-EUR-VISA");
+        const elEURtoPLNbyVISA = document.getElementById("EUR-PLN-VISA");
         const elPLNtoBYNbyVISA = document.getElementById("PLN-BYN-VISA");
         const elUSDtoBYNbyVISA = document.getElementById("USD-BYN-VISA");
+        const elEURtoBYNbyVISA = document.getElementById("EUR-BYN-VISA");
 
         const urlVISA = 'https://www.visa.de/cmsapi/fx/rates?';
         const urlParamEURtoUSDbyVISA = new URLSearchParams({
@@ -830,6 +923,93 @@
                     })
             }).catch(error => {
             elUSDtoBYNbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamEURtoBYNbyVISA = new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'BYN',
+            toCurr: 'EUR'
+        });
+
+        elEURtoBYNbyVISA.innerText = null;
+        fetchWithProxy(urlVISA, urlParamEURtoBYNbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoBYNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+            elEURtoBYNbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamUSDtoPLNbyVISA = new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'PLN',
+            toCurr: 'USD'
+        });
+        elUSDtoPLNbyVISA.innerText = null;
+
+        fetchWithProxy(urlVISA, urlParamUSDtoPLNbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elUSDtoPLNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+            elUSDtoPLNbyVISA.innerText = 'error';
+            console.error(error);
+        });
+
+        const urlParamEURtoPLNbyVISA = new URLSearchParams({
+            amount: 1,
+            fee: 0,
+            utcConvertedDate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            exchangedate: new Date().toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            }),
+            fromCurr: 'PLN',
+            toCurr: 'EUR'
+        });
+        elEURtoPLNbyVISA.innerText = null;
+
+        fetchWithProxy(urlVISA, urlParamEURtoPLNbyVISA, true)
+            .then(response => {
+                response.json()
+                    .then(res => {
+                        elEURtoPLNbyVISA.innerText = Number.parseFloat(res['originalValues']['fxRateVisa']).toFixed(4);
+                    })
+            }).catch(error => {
+            elEURtoPLNbyVISA.innerText = 'error';
             console.error(error);
         });
     }
