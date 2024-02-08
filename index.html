@@ -359,11 +359,6 @@
             return;
         }
 
-        const elPLNtoUSDbyPKO = document.getElementById("PLN-USD-PKO");
-        const elUSDtoPLNbyPKO = document.getElementById("USD-PLN-PKO");
-        const elPLNtoEURbyPKO = document.getElementById("PLN-EUR-PKO");
-        const elEURtoPLNbyPKO = document.getElementById("EUR-PLN-PKO");
-
         const urlPKO = 'https://www.pkobp.pl/kantor-internetowy-kursy/';
 
         fetchWithProxy(urlPKO, '', true)
@@ -376,11 +371,19 @@
                         const raws = doc.querySelectorAll("table.table-cantor tbody tr");
                         for (const raw of raws) {
                             if (raw.querySelector("td").innerText.includes("USD")) {
-                                elPLNtoUSDbyPKO.innerText = raw.querySelectorAll("td")[1].innerText.split(" ")[0];
-                                elUSDtoPLNbyPKO.innerText = raw.querySelectorAll("td")[2].innerText.split(" ")[0];
+                                document.getElementById("PLN-USD-PKO").innerText =
+                                    parseFloat(raw.querySelectorAll("td")[1].innerText.split(" ")[0].replace(',', '.'))
+                                        .toFixed(4);
+                                document.getElementById("USD-PLN-PKO").innerText =
+                                    parseFloat(raw.querySelectorAll("td")[2].innerText.split(" ")[0].replace(',', '.'))
+                                        .toFixed(4);
                             } else if (raw.querySelector("td").innerText.includes("EUR")) {
-                                elPLNtoEURbyPKO.innerText = raw.querySelectorAll("td")[1].innerText.split(" ")[0];
-                                elEURtoPLNbyPKO.innerText = raw.querySelectorAll("td")[2].innerText.split(" ")[0];
+                                document.getElementById("PLN-EUR-PKO").innerText =
+                                    parseFloat(raw.querySelectorAll("td")[1].innerText.split(" ")[0].replace(',', '.'))
+                                        .toFixed(4);
+                                document.getElementById("EUR-PLN-PKO").innerText =
+                                    parseFloat(raw.querySelectorAll("td")[2].innerText.split(" ")[0].replace(',', '.'))
+                                        .toFixed(4);
                             }
                         }
                     })
