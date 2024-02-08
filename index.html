@@ -228,6 +228,12 @@
         <tr>
             <th scope="col">EXCHANGE</th>
             <th scope="col">
+                <button id="btnUpdatePKO" class="btn btn-lg btn-outline-primary" type="button" onclick="updatePKO()">
+                    <span>Revolut   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Update PKO</span>
+                </button>
+            </th>
+            <th scope="col">
                 <button id="btnUpdateRev" class="btn btn-lg btn-light" type="button" onclick="updateRev()">
                     <span>Revolut   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
                     <span class="sr-only">Update Revolut</span>
@@ -250,54 +256,63 @@
         <tbody>
         <tr>
             <th scope="row">EUR→USD</th>
+            <td><span id="USD-EUR-PKO"></span></td>
             <td><span id="USD-EUR-REV"></span></td>
             <td><span id="USD-EUR-MC"></span></td>
             <td><span id="USD-EUR-VISA"></span></td>
         </tr>
         <tr>
             <th scope="row">USD→EUR</th>
+            <td><span id="EUR-USD-PKO"></span></td>
             <td><span id="EUR-USD-REV"></span></td>
             <td><span id="EUR-USD-MC"></span></td>
             <td><span id="EUR-USD-VISA"></span></td>
         </tr>
         <tr>
             <th scope="row">USD→PLN</th>
+            <td><span id="PLN-USD-PKO"></span></td>
             <td><span id="PLN-USD-REV"></span></td>
             <td><span id="PLN-USD-MC"></span></td>
             <td><span id="PLN-USD-VISA"></span></td>
         </tr>
         <tr>
             <th scope="row">PLN→USD</th>
+            <td><span id="USD-PLN-PKO"></span></td>
             <td><span id="USD-PLN-REV"></span></td>
             <td><span id="USD-PLN-MC"></span></td>
             <td><span id="USD-PLN-VISA"></span></td>
         </tr>
         <tr>
             <th scope="row">EUR→PLN</th>
+            <td><span id="PLN-EUR-PKO"></span></td>
             <td><span id="PLN-EUR-REV"></span></td>
             <td><span id="PLN-EUR-MC"></span></td>
             <td><span id="PLN-EUR-VISA"></span></td>
         </tr>
         <tr>
             <th scope="row">PLN→EUR</th>
+            <td><span id="EUR-PLN-PKO"></span></td>
             <td><span id="EUR-PLN-REV"></span></td>
             <td><span id="EUR-PLN-MC"></span></td>
             <td><span id="EUR-PLN-VISA"></span></td>
         </tr>
         <tr class="table-dark">
             <th scope="row">BYN→PLN</th>
+            <td><span id="PLN-BYN-PKO"></span></td>
             <td><span id="PLN-BYN-REV"></span></td>
             <td><span id="PLN-BYN-MC"></span></td>
             <td><span id="PLN-BYN-VISA"></span></td>
         </tr>
         <tr class="table-dark">
             <th scope="row">BYN→USD</th>
+            <td><span id="USD-BYN-PKO"></span></td>
             <td><span id="USD-BYN-REV"></span></td>
             <td><span id="USD-BYN-MC"></span></td>
             <td><span id="USD-BYN-VISA"></span></td>
         </tr>
         <tr class="table-dark">
             <th scope="row">BYN→EUR</th>
+            <td><span id="EUR-BYN-PKO"></span></td>
             <td><span id="EUR-BYN-REV"></span></td>
             <td><span id="EUR-BYN-MC"></span></td>
             <td><span id="EUR-BYN-VISA"></span></td>
@@ -336,6 +351,43 @@
         }
         console.log(`URL for POST: ${proxyUrl}${url}`);
         return fetch(proxyUrl + url);
+    }
+
+    function updatePKO() {
+        const btnUpdate = document.getElementById("btnUpdatePKO");
+        if (!isExist(btnUpdate)) {
+            return;
+        }
+
+        const elPLNtoUSDbyPKO = document.getElementById("PLN-USD-REV");
+        const elUSDtoPLNbyPKO = document.getElementById("USD-PLN-REV");
+        const elPLNtoEURbyPKO = document.getElementById("PLN-EUR-REV");
+        const elEURtoPLNbyPKO = document.getElementById("EUR-PLN-REV");
+
+        const urlPKO = 'https://www.pkobp.pl/kantor-internetowy-kursy/';
+
+        fetchWithProxy(urlPKO, '', true)
+            .then(response => {
+                response.text()
+                    .then(res => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(res, "text/html");
+
+                        const raws = doc.querySelectorAll("table.table-cantor tbody tr");
+                        for (const raw of raws) {
+                            if (raw.querySelector("td").innerText.trim() == "USD") {
+                                elPLNtoUSDbyPKO.value = raw.querySelectorAll("td")[1].innerText.split(" ")[0];
+                                elUSDtoPLNbyPKO.value = raw.querySelectorAll("td")[2].innerText.split(" ")[0];
+                            } else if (raw.querySelector("td").innerText.trim() == "EUR") {
+                                elPLNtoEURbyPKO.value = raw.querySelectorAll("td")[1].innerText.split(" ")[0];
+                                elEURtoPLNbyPKO.value = raw.querySelectorAll("td")[2].innerText.split(" ")[0];
+                            }
+                        }
+                    })
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     function updateRev() {
@@ -1273,7 +1325,7 @@
         requestPostAlfa();
         requestPostBGPB();
         requestPostMTB();
-        updateRev();
+        updatePKO();
     }
 
     let colNum;
