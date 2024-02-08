@@ -228,8 +228,8 @@
         <tr>
             <th scope="col">EXCHANGE</th>
             <th scope="col">
-                <button id="btnUpdatePKO" class="btn btn-lg btn-outline-primary" type="button" onclick="updatePKO()">
-                    <span>Revolut   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
+                <button id="btnUpdatePKO" class="btn btn-lg btn-info" type="button" onclick="updatePKO()">
+                    <span>PKO   </span><span class="bi bi-arrow-repeat" role="status" aria-hidden="true"></span>
                     <span class="sr-only">Update PKO</span>
                 </button>
             </th>
@@ -375,10 +375,10 @@
 
                         const raws = doc.querySelectorAll("table.table-cantor tbody tr");
                         for (const raw of raws) {
-                            if (raw.querySelector("td").innerText.trim() == "USD") {
+                            if (raw.querySelector("td").innerText.includes("USD")) {
                                 elPLNtoUSDbyPKO.value = raw.querySelectorAll("td")[1].innerText.split(" ")[0];
                                 elUSDtoPLNbyPKO.value = raw.querySelectorAll("td")[2].innerText.split(" ")[0];
-                            } else if (raw.querySelector("td").innerText.trim() == "EUR") {
+                            } else if (raw.querySelector("td").innerText.includes("EUR")) {
                                 elPLNtoEURbyPKO.value = raw.querySelectorAll("td")[1].innerText.split(" ")[0];
                                 elEURtoPLNbyPKO.value = raw.querySelectorAll("td")[2].innerText.split(" ")[0];
                             }
